@@ -1,0 +1,80 @@
+import Link from "@/components/Link";
+import { Arrow, Mark } from "./Icons";
+export default function SiteFooter() {
+  return (
+    <footer className="site-footer">
+      <div className="footer-top">
+        <div>
+          <span className="section-label">
+            A SHARED VISION. AN ENDURING LEGACY.
+          </span>
+          <h2>
+            Let’s build something
+            <br />
+            <em>that lasts.</em>
+          </h2>
+        </div>
+        <Link
+          className="circle-link"
+          href="/#contact"
+          aria-label="Start your project"
+        >
+          <Arrow diagonal />
+        </Link>
+      </div>
+      <div className="footer-grid">
+        <div className="footer-brand">
+          <Mark />
+          <p>
+            Visionary architecture. Intelligent engineering.
+            <br />
+            Exceptional spaces, thoughtfully delivered.
+          </p>
+        </div>
+        <div>
+          <span className="section-label">EXPLORE</span>
+          <Link href="/#about">The studio</Link>
+          <Link href="/projects">Project collection</Link>
+          <Link href="/#process">Our process</Link>
+          <Link href="/contact">Start a conversation</Link>
+        </div>
+        <div>
+          <span className="section-label">EXPERTISE</span>
+          <Link href="/services/architecture-engineering">
+            Architecture & engineering
+          </Link>
+          <Link href="/services/residential-commercial-construction">
+            Residential & commercial
+          </Link>
+          <Link href="/services/interior-design">Bespoke interiors</Link>
+          <Link href="/services/turnkey-renovation">Turnkey & renovation</Link>
+        </div>
+        <div>
+          <span className="section-label">A NOTE ON THIS EDITION</span>
+          <p className="footer-note">
+            An introduction to the BR vision.
+            <br />
+            Portfolio imagery represents illustrative concepts, not completed BR
+            projects.
+          </p>
+          <a href="/#home" className="text-link">
+            Back to top <Arrow style={{ transform: "rotate(-90deg)" }} />
+          </a>
+        </div>
+      </div>
+      <div className="footer-wordmark" aria-hidden="true">
+        BRCONSTRUCTION
+      </div>
+      <div className="footer-bottom">
+        <span>
+          © {new Date().getFullYear()} BR Construction. All rights reserved.
+        </span>
+        <div>
+          <Link href="/privacy">Privacy policy</Link>
+          <Link href="/terms">Terms of use</Link>
+        </div>
+        <span>DESIGNED WITH PURPOSE. BUILT TO ENDURE.</span>
+      </div>
+    </footer>
+  );
+}
