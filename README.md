@@ -6,7 +6,7 @@ The default commands run a standard Next.js application for Vercel. Optional `si
 
 ## Run locally
 
-Use Node.js 22.13 or newer and npm. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`.
+Use Node.js 24.x and npm. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`.
 
 ```sh
 npm ci
