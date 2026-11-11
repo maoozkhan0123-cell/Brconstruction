@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/favicon.svg?v=br-logo" },
 };
 export default function RootLayout({
   children,

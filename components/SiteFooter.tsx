@@ -1,5 +1,6 @@
 import Link from "@/components/Link";
-import { Arrow, Mark } from "./Icons";
+import { Arrow } from "./Icons";
+import BrandLogo from "./BrandLogo";
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -24,7 +25,9 @@ export default function SiteFooter() {
       </div>
       <div className="footer-grid">
         <div className="footer-brand">
-          <Mark />
+          <Link href="/" className="brand footer-logo" aria-label="BR Construction home">
+            <BrandLogo />
+          </Link>
           <p>
             Visionary architecture. Intelligent engineering.
             <br />

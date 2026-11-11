@@ -20,3 +20,7 @@ Files were retrieved from the Unsplash image CDN as optimized WebP images. The s
 | philosophy.webp, philosophy-alt.webp | https://images.unsplash.com/photo-1518005020951-eccb494ad742 |
 
 Hero is 1920 px wide, with a WebP quality setting of 82. Portfolio images are 1200–1400 px wide, with a WebP quality setting of 80. Images below the fold should be lazy loaded.
+
+## Brand identity
+
+The BR logo was supplied by the site owner as `public/BR Construction Logo.png`. `br-construction-logo.webp` is a resized, compressed copy for the website. The original artwork is retained; display framing is applied in CSS.

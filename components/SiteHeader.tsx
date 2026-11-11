@@ -2,7 +2,8 @@
 import Link from "@/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Arrow, Mark } from "./Icons";
+import { Arrow } from "./Icons";
+import BrandLogo from "./BrandLogo";
 const navigation = [
   ["Home", "/#home"],
   ["About", "/#about"],
@@ -60,13 +61,7 @@ export default function SiteHeader() {
       </a>
       <header className={`site-header ${scrolled || ["/projects", "/privacy", "/terms"].includes(pathname) ? "is-scrolled" : ""}`}>
         <Link href="/" className="brand" aria-label="BR Construction home">
-          <Mark />
-          <span>
-            <strong>
-              BR<span>CONSTRUCTION</span>
-            </strong>
-            <small>ARCHITECTURE / ENGINEERING / BUILD</small>
-          </span>
+          <BrandLogo />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation.map(([label, href]) => (
@@ -103,7 +98,9 @@ export default function SiteHeader() {
         onClose={() => setOpen(false)}
       >
         <div className="mobile-menu-top">
-          <span className="section-label">BR CONSTRUCTION</span>
+          <Link href="/" className="brand" aria-label="BR Construction home" onClick={close}>
+            <BrandLogo />
+          </Link>
           <button
             className="icon-button close-button"
             onClick={close}
