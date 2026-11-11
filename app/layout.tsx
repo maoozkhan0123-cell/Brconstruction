@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
 import "./contact-details.css";
+import "./chat-widget.css";
 import { company } from "@/data/company";
 import { getSiteOrigin } from "@/lib/site-url";
 const origin = getSiteOrigin();
@@ -62,6 +64,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
+        <ChatWidget />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

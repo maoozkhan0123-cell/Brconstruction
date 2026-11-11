@@ -39,6 +39,8 @@ Next.js reads local configuration from `.env.local`. Configure hosted values in 
 | `INQUIRY_RATE_LIMIT_SECRET` | Recommended long random server-only value used to HMAC the network identifier for rate limiting. |
 | `INQUIRY_NOTIFICATION_WEBHOOK` | Optional approved HTTPS endpoint that accepts a JSON `inquiry.created` event and sends email or creates a CRM record. |
 | `INQUIRY_NOTIFICATION_TOKEN` | Optional bearer token sent only to the configured notification endpoint. |
+| `GROQ_API_KEY` | Server-only Groq key for the website's AI assistant. |
+| `GROQ_CHAT_MODEL` | Optional Groq chat model; defaults to `openai/gpt-oss-20b`. |
 | `NEXT_PUBLIC_SITE_URL` | Optional public canonical origin, such as the final HTTPS custom domain. |
 | `NEXT_PUBLIC_HERO_VIDEO_URL` | Optional licensed or company-approved HTTPS video URL; public and included at build time. |
 
@@ -47,6 +49,30 @@ Next.js reads local configuration from `.env.local`. Configure hosted values in 
 The notification event contains `event`, `id`, an ISO `createdAt`, and the submitted project/contact fields. The receiver should authenticate requests, handle repeated event IDs safely, and return success only when it accepts the event. The application uses a five-second timeout and does not automatically retry failed notifications.
 
 An inquiry is saved before the API returns HTTP 201. With Blob storage, each accepted inquiry is a private JSON object, and the application confirms the write before acknowledging it. Its `notification` value is `delivered`, `failed`, or `not_configured`; `delivered` means the webhook accepted the event, not that a human received an email. A failed or unconfigured notification does not erase a saved inquiry. Displaying the company email address on the website does not configure email delivery.
+
+## Website chat assistant
+
+The floating BR Construction assistant answers from the website's shared company,
+services, process, and illustrative portfolio content. It follows the visitor's
+language, including English and Roman Urdu. This is website context supplied with
+each request, so edits to those shared data files update its knowledge on the next
+deployment; no model fine-tuning is required. Prices, schedules, bookings, and
+unpublished company information must be confirmed by the team.
+
+Set server-only `GROQ_API_KEY` in Vercel and optionally `GROQ_CHAT_MODEL` (default
+`openai/gpt-oss-20b`). Never place the key in client code or a `NEXT_PUBLIC_*`
+variable. The `/api/chat` route owns the system instructions, validates bounded
+same-origin conversations, and sends them to Groq. Private Blob counters limit
+usage separately from project inquiries; production requires the connected private
+Blob store. The browser keeps chat only in memory, and the server does not save chat
+text as an inquiry or send notifications. Clearing chat or reloading removes the
+browser transcript. Groq processes message content under its own terms, as disclosed
+in the widget and privacy page.
+
+For local testing, use ignored `.env.local`. Configure Groq values on Vercel before
+deploying. Check English and Roman Urdu replies, real contact information, honest
+quote guidance, mobile keyboard behavior, loading/retry states, and provider failure
+handling. A saved chat reply does not submit a project inquiry or book a consultation.
 
 ## Optional Turso/libSQL storage
 
@@ -83,6 +109,7 @@ public/images/               Local WebP architectural reference photographs
 ```sh
 npm run typecheck
 node --test tests/inquiries.validation.test.mjs
+node --test tests/chatbot.test.mjs
 npm run build
 npm start
 ```

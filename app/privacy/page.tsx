@@ -55,6 +55,23 @@ export default function PrivacyPage() {
         </p>
       </section>
       <section>
+        <h2>AI chat assistant</h2>
+        <p>
+          When you send a message in the BR Construction assistant, your message
+          and recent conversation are processed by Groq to generate a reply based
+          on this website. The conversation stays in this page session and is not
+          saved as a project inquiry. Clearing the chat or refreshing the page
+          removes the conversation from the assistant. Groq processes requests
+          under its own privacy terms. Please avoid sharing sensitive information.
+        </p>
+        <p>
+          AI replies can be inaccurate. Prices, project schedules, and bookings
+          require confirmation from our team. To submit a project inquiry, use
+          the contact form. The server uses a hashed network identifier and
+          message counts to limit abuse without storing chat text in that record.
+        </p>
+      </section>
+      <section>
         <h2>Service providers</h2>
         <p>
           The website uses hosting and storage providers to operate the site
