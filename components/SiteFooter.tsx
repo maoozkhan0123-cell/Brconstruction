@@ -1,6 +1,7 @@
 import Link from "@/components/Link";
 import { Arrow } from "./Icons";
 import BrandLogo from "./BrandLogo";
+import ContactDetails from "./ContactDetails";
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -52,18 +53,14 @@ export default function SiteFooter() {
           <Link href="/services/interior-design">Bespoke interiors</Link>
           <Link href="/services/turnkey-renovation">Turnkey & renovation</Link>
         </div>
-        <div>
-          <span className="section-label">A NOTE ON THIS EDITION</span>
-          <p className="footer-note">
-            An introduction to the BR vision.
-            <br />
-            Portfolio imagery represents illustrative concepts, not completed BR
-            projects.
-          </p>
-          <a href="/#home" className="text-link">
-            Back to top <Arrow style={{ transform: "rotate(-90deg)" }} />
-          </a>
+        <div className="footer-contact">
+          <span className="section-label">GET IN TOUCH</span>
+          <ContactDetails compact />
         </div>
+      </div>
+      <div className="footer-disclosure">
+        <p className="footer-note">Portfolio imagery represents illustrative concepts, not completed BR projects.</p>
+        <a href="/#home" className="text-link">Back to top <Arrow style={{ transform: "rotate(-90deg)" }} /></a>
       </div>
       <div className="footer-wordmark" aria-hidden="true">
         BRCONSTRUCTION

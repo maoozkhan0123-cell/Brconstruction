@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import "./globals.css";
+import "./contact-details.css";
+import { company } from "@/data/company";
 const origin = "https://brconstruction-studio.bytechsol.chatgpt.site";
 export const metadata: Metadata = {
   metadataBase: new URL(origin),
@@ -67,6 +69,20 @@ export default function RootLayout({
               "@type": "Organization",
               name: "BR Construction",
               url: origin,
+              email: company.email,
+              telephone: company.phones[0].number,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: `${company.address.line1}, ${company.address.line2}`,
+                addressLocality: company.address.city,
+                addressCountry: company.address.country,
+              },
+              contactPoint: company.phones.map(phone => ({
+                "@type": "ContactPoint",
+                telephone: phone.number,
+                email: company.email,
+                contactType: "project inquiries",
+              })),
               description:
                 "Integrated architecture, engineering, construction, and interior design.",
             }),

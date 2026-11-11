@@ -128,11 +128,13 @@ Do not commit `node_modules`, `dist`, `.wrangler`, `.sites-runtime`, local `.env
 
 The portfolio consists of **clearly labeled illustrative concepts**, not verified company work. Dates, areas, clients, office locations, phone numbers, social accounts, credentials, awards, performance statistics, and testimonials have not been invented. The commitments section stands in for unavailable client testimonials.
 
+Company-supplied office, email, and telephone information is maintained in `data/company.ts` and shared by the homepage, contact page, footer, and business structured data. The email address is also available for inquiry/privacy questions. Displaying this address does not configure the optional email/CRM notification service.
+
 Before public business publication, supply and approve:
 
-- The company’s legal identity, verified business contact details, service areas, and relevant professional credentials.
+- The company’s legal identity, service areas, relevant professional credentials, and final approval of the supplied business contact details.
 - Authentic project information, photography permissions, and approved client quotes where used.
-- The privacy contact, data retention process, finalized privacy/website terms, and any required notices.
+- The data retention process, finalized privacy/website terms, and any required notices.
 - The company’s notification/CRM destination and an end-to-end accepted inquiry test.
 - The final canonical domain and corresponding metadata, sitemap, structured data, and hosting configuration.
 

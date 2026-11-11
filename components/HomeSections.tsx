@@ -6,6 +6,7 @@ import { services } from "@/data/services";
 import ContactForm from "./ContactForm";
 import ProjectExplorer from "./ProjectExplorer";
 import CinematicVideo from "./CinematicVideo";
+import ContactDetails from "./ContactDetails";
 
 const slides = [
   {
@@ -537,6 +538,7 @@ export function ContactSection({
           explore
           <br className="desktop-break" /> what’s possible, together.
         </p>
+        <ContactDetails />
         <div className="contact-image">
           <img
             src="/images/project-05.webp"

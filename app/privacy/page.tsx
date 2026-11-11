@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { ArrowUpRight } from "lucide-react";
+import { company } from "@/data/company";
 
 export const metadata: Metadata = {
   title: "Privacy Information",
@@ -20,8 +21,8 @@ export default function PrivacyPage() {
         <p>
           This is a private website preview. This notice describes the preview’s
           intended data handling and requires the company’s review before a
-          public business launch. The company’s legal identity, privacy contact,
-          and retention schedule have not yet been supplied.
+          public business launch. The company’s legal identity and retention
+          schedule still require confirmation.
         </p>
       </div>
       <section>
@@ -65,11 +66,10 @@ export default function PrivacyPage() {
       <section>
         <h2>Retention and your choices</h2>
         <p>
-          A company-approved retention period and verified privacy contact are
-          required before a public launch. In this preview, use demonstration
-          details when testing. If you need to access, correct, or delete an
-          inquiry you submitted, contact the person who shared this private
-          preview so the site owner can handle the request.
+          A company-approved retention period is required before a public launch.
+          In this preview, use demonstration details when testing. For questions
+          about your submitted inquiry, or to request access, correction, or
+          deletion, email <a href={`mailto:${company.email}`}>{company.email}</a>.
         </p>
       </section>
       <section>
