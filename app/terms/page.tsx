@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { ArrowUpRight } from "lucide-react";
+import { getSiteOrigin } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Website Terms",
   description:
-    "Terms and demonstration content information for the BR Construction website preview.",
+    "Website terms, project inquiry information, and illustrative content notices for BR Construction.",
   alternates: {
-    canonical: "https://brconstruction-studio.bytechsol.chatgpt.site/terms",
+    canonical: `${getSiteOrigin()}/terms`,
   },
 };
 
@@ -18,18 +19,19 @@ export default function TermsPage() {
       <h1 className="display-heading">Website terms.</h1>
       <div className="demo-notice">
         <p>
-          These are preview website terms and require company and legal review
-          before a public business launch. No contracting entity, jurisdiction,
-          or professional registration is represented by this draft.
+          These website terms require final company and legal review. No
+          contracting entity, jurisdiction, or professional registration is
+          represented by this draft.
         </p>
       </div>
       <section>
-        <h2>About this preview</h2>
+        <h2>About this website</h2>
         <p>
-          This website presents the proposed BR Construction brand and its
+          This website presents the BR Construction brand and its
           architecture, engineering, construction, and interior design offering.
-          It is a private demonstration until the company supplies and approves
-          its authentic business information and project content.
+          The contact details have been supplied by the company. Portfolio
+          studies labeled as illustrative concepts show a design direction and
+          are not completed company commissions.
         </p>
       </section>
       <section>
@@ -82,12 +84,11 @@ export default function TermsPage() {
         </p>
       </section>
       <section>
-        <h2>Review before public launch</h2>
+        <h2>Company information and approval</h2>
         <p>
-          The site owner must confirm the company’s legal identity, verified
-          contact information, professional credentials where relevant, rights
-          to published assets, and final privacy and website terms before
-          opening this preview as a public business website.
+          The site owner is responsible for confirming the company’s legal
+          identity, contact information, professional credentials where relevant,
+          rights to published assets, and final privacy and website terms.
         </p>
       </section>
       <Link className="text-link" href="/">

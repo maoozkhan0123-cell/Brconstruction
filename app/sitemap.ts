@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
 import { services } from "@/data/services";
+import { getSiteOrigin } from "@/lib/site-url";
 export default function sitemap(): MetadataRoute.Sitemap {
-  const origin = "https://brconstruction-studio.bytechsol.chatgpt.site";
+  const origin = getSiteOrigin();
   return [
     "",
     "/about",

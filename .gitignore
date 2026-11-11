@@ -35,6 +35,7 @@ yarn-error.log*
 # Checkout-local tool state
 /.wrangler/
 /.sites-runtime/
+/.vercel/
 /.qa/
 
 # Workspace scaffolding and publication archives
@@ -45,3 +46,4 @@ yarn-error.log*
 
 # OS metadata
 .DS_Store
+

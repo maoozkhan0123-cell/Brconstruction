@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight, Check } from "lucide-react";
 import { services } from "@/data/services";
 import { projects } from "@/data/projects";
+import { getSiteOrigin } from "@/lib/site-url";
 
 type PageProps = { params: Promise<{ slug: string }> };
-const origin = "https://brconstruction-studio.bytechsol.chatgpt.site";
+const origin = getSiteOrigin();
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));

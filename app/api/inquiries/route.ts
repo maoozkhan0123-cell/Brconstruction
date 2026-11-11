@@ -1,8 +1,8 @@
-import { env } from "cloudflare:workers";
 import { eq, sql } from "drizzle-orm";
 import { getDb } from "@/db";
 import { inquiries, inquiryRateLimits } from "@/db/schema";
 import { validateInquiry } from "@/lib/validations";
+import { getInquiryEnvironment, isInquiryStorageConfigured, getInquiryClientAddress } from "@/lib/inquiry-runtime";
 
 const MAX_BODY_BYTES = 16 * 1024;
 const RATE_WINDOW_MS = 15 * 60 * 1000;
@@ -53,10 +53,9 @@ async function readBody(request: Request) {
 }
 
 async function rateLimitKey(request: Request) {
-  // Cloudflare supplies this header at the edge. Never trust client-provided X-Forwarded-For.
-  const source = `${new URL(request.url).origin}:${request.headers.get("cf-connecting-ip") ?? "local-preview"}`;
+  const source = `${new URL(request.url).origin}:${getInquiryClientAddress(request)}`;
   const encoder = new TextEncoder();
-  const secret = env.INQUIRY_RATE_LIMIT_SECRET;
+  const secret = getInquiryEnvironment().INQUIRY_RATE_LIMIT_SECRET;
   const digest = secret
     ? await crypto.subtle.sign(
         "HMAC",
@@ -119,7 +118,7 @@ export async function POST(request: Request) {
       { ok: false, error: result.error, fields: result.fields },
       400,
     );
-  if (!env.DB)
+  if (!isInquiryStorageConfigured())
     return respond(
       {
         ok: false,
@@ -129,7 +128,8 @@ export async function POST(request: Request) {
       503,
     );
 
-  const db = getDb();
+  const env = getInquiryEnvironment();
+  let db: ReturnType<typeof getDb>;
   const id = crypto.randomUUID();
   const {
     website: _website,
@@ -138,6 +138,7 @@ export async function POST(request: Request) {
     ...details
   } = result.data;
   try {
+    db = getDb();
     const key = await rateLimitKey(request);
     const [limit] = await db
       .insert(inquiryRateLimits)
@@ -188,7 +189,7 @@ export async function POST(request: Request) {
     );
   }
 
-  // An inquiry is accepted only after D1 confirms it. Optional CRM/email webhooks never change that fact.
+  // An inquiry is accepted only after storage confirms it. Notifications are optional.
   let notification: "delivered" | "not_configured" | "failed" =
     "not_configured";
   if (env.INQUIRY_NOTIFICATION_WEBHOOK) {

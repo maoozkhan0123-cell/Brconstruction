@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { ArrowUpRight } from "lucide-react";
 import { company } from "@/data/company";
+import { getSiteOrigin } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Privacy Information",
   description:
-    "Information about inquiries and personal data in the BR Construction website preview.",
+    "Information about project inquiries and personal data on the BR Construction website.",
   alternates: {
-    canonical: "https://brconstruction-studio.bytechsol.chatgpt.site/privacy",
+    canonical: `${getSiteOrigin()}/privacy`,
   },
 };
 
@@ -19,10 +20,9 @@ export default function PrivacyPage() {
       <h1 className="display-heading">Privacy information.</h1>
       <div className="demo-notice">
         <p>
-          This is a private website preview. This notice describes the preview’s
-          intended data handling and requires the company’s review before a
-          public business launch. The company’s legal identity and retention
-          schedule still require confirmation.
+          This notice describes how website inquiries are handled. The company’s
+          legal identity, retention schedule, and final privacy notice still
+          require company approval.
         </p>
       </div>
       <section>
@@ -57,19 +57,20 @@ export default function PrivacyPage() {
       <section>
         <h2>Service providers</h2>
         <p>
-          This preview is hosted through ChatGPT Sites using Cloudflare
-          infrastructure. Those providers process technical data under their own
-          terms. Any additional email or customer relationship service must be
-          configured and reviewed by the company before it is used.
+          The website uses hosting and database providers to operate the site
+          and store accepted project inquiries. Those providers process technical
+          data under their own terms. Any additional email or customer
+          relationship service must be configured and reviewed by the company
+          before it is used.
         </p>
       </section>
       <section>
         <h2>Retention and your choices</h2>
         <p>
-          A company-approved retention period is required before a public launch.
-          In this preview, use demonstration details when testing. For questions
-          about your submitted inquiry, or to request access, correction, or
-          deletion, email <a href={`mailto:${company.email}`}>{company.email}</a>.
+          A company-approved retention period still requires confirmation. For
+          questions about your submitted inquiry, or to request access,
+          correction, or deletion, email{" "}
+          <a href={`mailto:${company.email}`}>{company.email}</a>.
         </p>
       </section>
       <section>

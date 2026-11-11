@@ -4,7 +4,8 @@ import SiteFooter from "@/components/SiteFooter";
 import "./globals.css";
 import "./contact-details.css";
 import { company } from "@/data/company";
-const origin = "https://brconstruction-studio.bytechsol.chatgpt.site";
+import { getSiteOrigin } from "@/lib/site-url";
+const origin = getSiteOrigin();
 export const metadata: Metadata = {
   metadataBase: new URL(origin),
   title: {
