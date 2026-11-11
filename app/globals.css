@@ -3613,3 +3613,4 @@ section[id] {
 }
 .hero-heading-line { display: block; } .hero h1 em:after { content: none; }
 .field-error { min-height: 15px; } .contact-section > *, .form-grid > * { min-width: 0; }
+.footer-top > div { min-width: 0; flex: 1; } .footer-top .circle-link { flex-shrink: 0; } html, body { overflow-x: clip; }
