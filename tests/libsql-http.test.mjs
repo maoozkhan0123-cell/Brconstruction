@@ -82,12 +82,16 @@ test("Vercel uses validated platform IPs and never groups missing platform ident
   } finally { if (previous === undefined) delete process.env.VERCEL; else process.env.VERCEL = previous; }
 });
 
-test("runtime secrets stay server-side and storage requires both URL and token", () => {
-  const keys = ["TURSO_DATABASE_URL", "TURSO_AUTH_TOKEN", "LIBSQL_DATABASE_URL", "LIBSQL_AUTH_TOKEN", "INQUIRY_RATE_LIMIT_SECRET"];
+test("runtime secrets stay server-side and storage accepts private Blob or configured SQL", () => {
+  const keys = ["TURSO_DATABASE_URL", "TURSO_AUTH_TOKEN", "LIBSQL_DATABASE_URL", "LIBSQL_AUTH_TOKEN", "INQUIRY_RATE_LIMIT_SECRET", "BLOB_READ_WRITE_TOKEN"];
   const previous = Object.fromEntries(keys.map(key => [key, process.env[key]]));
   try {
     for (const key of keys) delete process.env[key];
     assert.equal(isInquiryStorageConfigured(), false);
+    process.env.BLOB_READ_WRITE_TOKEN = "blob-private-secret";
+    assert.equal(isInquiryStorageConfigured(), true);
+    assert.equal(getInquiryEnvironment().INQUIRY_RATE_LIMIT_SECRET, "blob-private-secret");
+    delete process.env.BLOB_READ_WRITE_TOKEN;
     process.env.TURSO_DATABASE_URL = "libsql://example.turso.io";
     assert.equal(isInquiryStorageConfigured(), false);
     process.env.TURSO_AUTH_TOKEN = "token";

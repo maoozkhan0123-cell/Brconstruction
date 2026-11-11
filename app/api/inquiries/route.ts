@@ -1,11 +1,8 @@
-import { eq, sql } from "drizzle-orm";
-import { getDb } from "@/db";
-import { inquiries, inquiryRateLimits } from "@/db/schema";
 import { validateInquiry } from "@/lib/validations";
 import { getInquiryEnvironment, isInquiryStorageConfigured, getInquiryClientAddress } from "@/lib/inquiry-runtime";
+import { claimRateLimit, saveInquiry, setInquiryNotificationStatus } from "@/lib/inquiry-store";
 
 const MAX_BODY_BYTES = 16 * 1024;
-const RATE_WINDOW_MS = 15 * 60 * 1000;
 const RESPONSE_HEADERS = {
   "Cache-Control": "no-store",
   "X-Content-Type-Options": "nosniff",
@@ -129,7 +126,6 @@ export async function POST(request: Request) {
     );
 
   const env = getInquiryEnvironment();
-  let db: ReturnType<typeof getDb>;
   const id = crypto.randomUUID();
   const {
     website: _website,
@@ -138,24 +134,9 @@ export async function POST(request: Request) {
     ...details
   } = result.data;
   try {
-    db = getDb();
     const key = await rateLimitKey(request);
-    const [limit] = await db
-      .insert(inquiryRateLimits)
-      .values({ key, windowStartedAt: now, count: 1 })
-      .onConflictDoUpdate({
-        target: inquiryRateLimits.key,
-        set: {
-          count: sql`CASE WHEN ${inquiryRateLimits.windowStartedAt} <= ${now - RATE_WINDOW_MS} THEN 1 ELSE ${inquiryRateLimits.count} + 1 END`,
-          windowStartedAt: sql`CASE WHEN ${inquiryRateLimits.windowStartedAt} <= ${now - RATE_WINDOW_MS} THEN ${now} ELSE ${inquiryRateLimits.windowStartedAt} END`,
-        },
-      })
-      .returning();
-    if (limit.count > 5) {
-      const retryAfter = Math.max(
-        1,
-        Math.ceil((limit.windowStartedAt + RATE_WINDOW_MS - now) / 1000),
-      );
+    const limit = await claimRateLimit(key, now);
+    if (!limit.allowed) {
       return respond(
         {
           ok: false,
@@ -163,20 +144,18 @@ export async function POST(request: Request) {
             "We have received several inquiries from this connection. Please try again in 15 minutes.",
         },
         429,
-        { "Retry-After": String(retryAfter) },
+        { "Retry-After": String(limit.retryAfter) },
       );
     }
-    await db
-      .insert(inquiries)
-      .values({
-        id,
-        ...details,
-        createdAt: now,
-        consentAt: now,
-        notificationStatus: env.INQUIRY_NOTIFICATION_WEBHOOK
-          ? "pending"
-          : "not_configured",
-      });
+    await saveInquiry({
+      id,
+      ...details,
+      createdAt: now,
+      consentAt: now,
+      notificationStatus: env.INQUIRY_NOTIFICATION_WEBHOOK
+        ? "pending"
+        : "not_configured",
+    });
   } catch {
     console.error("Inquiry persistence failed; no confirmation was sent.");
     return respond(
@@ -223,10 +202,7 @@ export async function POST(request: Request) {
       );
     }
     try {
-      await db
-        .update(inquiries)
-        .set({ notificationStatus: notification })
-        .where(eq(inquiries.id, id));
+      await setInquiryNotificationStatus(id, notification);
     } catch {
       console.error("Inquiry notification status could not be updated.");
     }

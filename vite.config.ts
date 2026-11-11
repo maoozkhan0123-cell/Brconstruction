@@ -49,6 +49,7 @@ export default defineConfig(async ({ command }) => {
       alias: [
         { find: /^@\/db$/, replacement: fileURLToPath(new URL("./db/cloudflare.ts", import.meta.url)) },
         { find: /^@\/lib\/inquiry-runtime$/, replacement: fileURLToPath(new URL("./lib/inquiry-runtime.cloudflare.ts", import.meta.url)) },
+        { find: /^@\/lib\/inquiry-store$/, replacement: fileURLToPath(new URL("./lib/inquiry-store.cloudflare.ts", import.meta.url)) },
       ],
     },
     server: {

@@ -38,7 +38,7 @@ export default function PrivacyPage() {
       <section>
         <h2>How inquiries are handled</h2>
         <p>
-          Accepted inquiries are stored in the website’s server-side database so
+          Accepted inquiries are stored in private server-side storage so
           they can be reviewed and responded to. If the company configures a
           notification service, inquiry information may also be sent to that
           service. A confirmation appears only after the server accepts the
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
       <section>
         <h2>Service providers</h2>
         <p>
-          The website uses hosting and database providers to operate the site
+          The website uses hosting and storage providers to operate the site
           and store accepted project inquiries. Those providers process technical
           data under their own terms. Any additional email or customer
           relationship service must be configured and reviewed by the company

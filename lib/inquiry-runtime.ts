@@ -2,7 +2,7 @@ import { isIP } from "node:net";
 
 export function getInquiryEnvironment() {
   return {
-    INQUIRY_RATE_LIMIT_SECRET: process.env.INQUIRY_RATE_LIMIT_SECRET,
+    INQUIRY_RATE_LIMIT_SECRET: process.env.INQUIRY_RATE_LIMIT_SECRET || process.env.BLOB_READ_WRITE_TOKEN || process.env.TURSO_AUTH_TOKEN || process.env.LIBSQL_AUTH_TOKEN,
     INQUIRY_NOTIFICATION_WEBHOOK: process.env.INQUIRY_NOTIFICATION_WEBHOOK,
     INQUIRY_NOTIFICATION_TOKEN: process.env.INQUIRY_NOTIFICATION_TOKEN,
   };
@@ -10,8 +10,9 @@ export function getInquiryEnvironment() {
 
 export function isInquiryStorageConfigured() {
   return Boolean(
-    (process.env.TURSO_DATABASE_URL || process.env.LIBSQL_DATABASE_URL)?.trim() &&
-    (process.env.TURSO_AUTH_TOKEN || process.env.LIBSQL_AUTH_TOKEN)?.trim(),
+    process.env.BLOB_READ_WRITE_TOKEN?.trim() ||
+    ((process.env.TURSO_DATABASE_URL || process.env.LIBSQL_DATABASE_URL)?.trim() &&
+    (process.env.TURSO_AUTH_TOKEN || process.env.LIBSQL_AUTH_TOKEN)?.trim()),
   );
 }
 

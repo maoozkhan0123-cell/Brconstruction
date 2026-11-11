@@ -15,27 +15,27 @@ npm run dev
 
 Open `http://localhost:3000`, or the address printed if that port is occupied. For a production preview, run `npm run build` followed by `npm start`.
 
-Copy `.env.example` to an ignored `.env.local` and configure the database before testing accepted inquiries. The visual pages work without a database; the form returns an error when an inquiry cannot be saved.
+Copy `.env.example` to an ignored `.env.local` and configure durable storage before testing accepted inquiries. The visual pages work without storage; the form returns an error when an inquiry cannot be saved.
 
 ## Deploy to Vercel
 
 1. Import [the GitHub repository](https://github.com/maoozkhan0123-cell/Brconstruction) into Vercel. Select **Next.js**, use the repository root, and leave the installation and build commands from `vercel.json`: `npm ci` and `npm run build`.
-2. Create a Turso/libSQL database and add its URL and authentication token to the Vercel project environment. Also add a random `INQUIRY_RATE_LIMIT_SECRET`. Set variables for each environment that needs to accept inquiries, including Preview if used.
-3. Using the same database credentials in your ignored local `.env.local`, run `npm run db:migrate`. Apply the schema before opening the deployed form to visitors. Preview deployments should use a separate test database when test and production inquiries need isolation.
-4. Deploy the `main` branch. Check the public pages, mobile navigation, portfolio, contact links, and an accepted test inquiry on the deployed URL. If notifications are configured, verify the receiving endpoint separately.
+2. Create a **private Vercel Blob store** and connect it to this Vercel project. The connection supplies the server-only `BLOB_READ_WRITE_TOKEN`. Add a random `INQUIRY_RATE_LIMIT_SECRET`, and configure each environment that needs to accept inquiries, including Preview if used. Use separate preview storage when test and production inquiries need isolation.
+3. Deploy the `main` branch. Blob storage needs no SQL migration. Check the public pages, mobile navigation, portfolio, contact links, and an accepted test inquiry on the deployed URL. If notifications are configured, verify the receiving endpoint separately.
 
-The application needs Vercel's Next.js runtime; a static export cannot serve `/api/inquiries`. A Cloudflare D1 binding from the optional Sites deployment is not available on Vercel.
+The application needs Vercel's Next.js runtime; a static export cannot serve `/api/inquiries`. An optional Turso/libSQL database is also supported; its separate setup is described below. A Cloudflare D1 binding from the optional Sites deployment is not available on Vercel.
 
 `NEXT_PUBLIC_SITE_URL` is optional. When omitted, metadata uses Vercel's production project URL, then its deployment URL, and finally `http://localhost:3000` locally. Set it to the final HTTPS custom domain when one is connected, and redeploy so canonical URLs, structured data, `sitemap.xml`, and `robots.txt` agree. Do not use a private preview URL as the production canonical domain.
 
 ## Environment variables
 
-Next.js reads local configuration from `.env.local`. Configure hosted values in Vercel's project settings and redeploy after changing them. Keep all database and notification credentials server-only; never place them in a `NEXT_PUBLIC_*` variable or commit populated environment files.
+Next.js reads local configuration from `.env.local`. Configure hosted values in Vercel's project settings and redeploy after changing them. Keep all storage, database, and notification credentials server-only; never place them in a `NEXT_PUBLIC_*` variable or commit populated environment files.
 
 | Variable | Purpose |
 | --- | --- |
-| `TURSO_DATABASE_URL` | Database URL supplied by Turso/libSQL. Required for saved inquiries. |
-| `TURSO_AUTH_TOKEN` | Server-only database authentication token. Required for the hosted Turso database. |
+| `BLOB_READ_WRITE_TOKEN` | Server-only token for the connected **private** Vercel Blob store. Enables the primary inquiry storage. |
+| `TURSO_DATABASE_URL` | Optional alternative Turso/libSQL database URL, used when Blob storage is not configured. |
+| `TURSO_AUTH_TOKEN` | Server-only database token; required when using the Turso alternative. |
 | `INQUIRY_RATE_LIMIT_SECRET` | Recommended long random server-only value used to HMAC the network identifier for rate limiting. |
 | `INQUIRY_NOTIFICATION_WEBHOOK` | Optional approved HTTPS endpoint that accepts a JSON `inquiry.created` event and sends email or creates a CRM record. |
 | `INQUIRY_NOTIFICATION_TOKEN` | Optional bearer token sent only to the configured notification endpoint. |
@@ -46,11 +46,11 @@ Next.js reads local configuration from `.env.local`. Configure hosted values in 
 
 The notification event contains `event`, `id`, an ISO `createdAt`, and the submitted project/contact fields. The receiver should authenticate requests, handle repeated event IDs safely, and return success only when it accepts the event. The application uses a five-second timeout and does not automatically retry failed notifications.
 
-An inquiry is saved before the API returns HTTP 201. Its `notification` value is `delivered`, `failed`, or `not_configured`; `delivered` means the webhook accepted the event, not that a human received an email. A failed or unconfigured notification does not erase a saved inquiry. Displaying the company email address on the website does not configure email delivery.
+An inquiry is saved before the API returns HTTP 201. With Blob storage, each accepted inquiry is a private JSON object, and the application confirms the write before acknowledging it. Its `notification` value is `delivered`, `failed`, or `not_configured`; `delivered` means the webhook accepted the event, not that a human received an email. A failed or unconfigured notification does not erase a saved inquiry. Displaying the company email address on the website does not configure email delivery.
 
-## Database migrations
+## Optional Turso/libSQL storage
 
-The schema defines `inquiries` and `inquiry_rate_limits`. With the target database credentials in `.env.local`, apply the committed SQL migrations:
+When `BLOB_READ_WRITE_TOKEN` is configured, the application uses the private Blob store and needs no SQL migration. To use Turso instead, leave the Blob token unset, configure `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`, and apply the committed SQL migrations with those credentials in `.env.local`. The schema defines `inquiries` and `inquiry_rate_limits`:
 
 ```sh
 npm run db:migrate
@@ -93,10 +93,10 @@ Check routes, menu and gallery keyboard behavior, filters and shareable URLs, fo
 
 - Zod validates the form and server request; invalid submissions return explicit errors.
 - The server accepts same-origin JSON, limits bodies to 16 KiB, and checks a honeypot, privacy consent, and a form age between two seconds and 24 hours.
-- Durable rate limiting allows up to five valid inquiries per connection per 15-minute window. A network identifier hash is stored instead of a raw IP address.
-- Database errors produce an error response and never a fabricated success. There is no public inquiry listing or unauthenticated administration route.
+- Durable rate limiting allows up to five valid inquiries per connection per 15-minute window. Blob storage claims one of five slots in each aligned 15-minute window using a keyed network identifier; no raw IP address is stored.
+- Storage errors produce an error response and never a fabricated success. There is no public inquiry listing or unauthenticated administration route.
 
-The database contains personal contact information. Restrict access to authorized operators and implement the company's approved retention and access/correction/deletion process.
+Stored inquiries contain personal contact information. Keep the Blob store private, restrict storage access to authorized operators, and implement the company's approved retention and access/correction/deletion process. The site does not automatically delete or export inquiries; authorized owners manage those operations through storage tools. Include the small rate-limit objects in the storage retention process.
 
 ## Optional Cloudflare/Sites runtime
 
@@ -108,7 +108,7 @@ npm run sites:build
 npm run sites:start
 ```
 
-Its server-only secrets belong in ignored `.dev.vars` locally and the Sites runtime settings when hosted. Its storage uses the `DB` D1 binding rather than Turso environment variables. After `sites:build`, apply a pending local migration using the generated Wrangler configuration, substituting the next migration filename as needed:
+Its server-only secrets belong in ignored `.dev.vars` locally and the Sites runtime settings when hosted. Its storage uses the `DB` D1 binding rather than the Blob token or Turso environment variables. After `sites:build`, apply a pending local migration using the generated Wrangler configuration, substituting the next migration filename as needed:
 
 ```sh
 node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_nice_tinkerer.sql
