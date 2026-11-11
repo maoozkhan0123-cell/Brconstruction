@@ -72,6 +72,22 @@ export default function PrivacyPage() {
         </p>
       </section>
       <section>
+        <h2>Quotation briefs and WhatsApp</h2>
+        <p>
+          If you choose to continue from the assistant to the inquiry form, the
+          project details you select are temporarily stored in this browser tab
+          to fill the form. The handoff link contains a random reference rather
+          than your project details. The draft is read once and expires after
+          30 minutes. You review it and add your contact information and consent
+          before submitting; starting a quotation brief does not send an inquiry.
+        </p>
+        <p>
+          WhatsApp links open a conversation with the company on WhatsApp. You
+          choose whether to send a message there. WhatsApp processes that
+          conversation under its own terms.
+        </p>
+      </section>
+      <section>
         <h2>Service providers</h2>
         <p>
           The website uses hosting and storage providers to operate the site

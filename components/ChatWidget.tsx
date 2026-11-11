@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Minus, RotateCcw, Send, Sparkles, X } from "lucide-react";
-import { company } from "@/data/company";
+import { ArrowUpRight, ClipboardList, Minus, RotateCcw, Send, Sparkles, X } from "lucide-react";
+import { company, whatsappUrl } from "@/data/company";
+import ChatQuoteForm, { type QuoteDetails } from "@/components/ChatQuoteForm";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 type ChatFailure = { message: string; retryAt: number };
@@ -13,6 +14,7 @@ const STARTERS = [
   "Where is your office?",
 ];
 const MAX_MESSAGE_LENGTH = 1200;
+const EMPTY_QUOTE_DETAILS: QuoteDetails = { service: "", location: "", budget: "", description: "" };
 
 function BotImage() {
   return (
@@ -38,6 +40,8 @@ function requestHistory(messages: ChatMessage[]) {
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+  const [quoteDetails, setQuoteDetails] = useState<QuoteDetails>(EMPTY_QUOTE_DETAILS);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -57,19 +61,23 @@ export default function ChatWidget() {
 
   useEffect(() => {
     if (!open) return;
-    composer.current?.focus({ preventScroll: true });
+    if (!quoteOpen) composer.current?.focus({ preventScroll: true });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [open, quoteOpen]);
 
   useEffect(() => {
-    if (open && transcript.current) {
+    if (open && !quoteOpen && transcript.current) {
       transcript.current.scrollTop = transcript.current.scrollHeight;
     }
-  }, [messages, busy, failure, open]);
+  }, [messages, busy, failure, open, quoteOpen]);
+
+  useEffect(() => {
+    if (quoteOpen && transcript.current) transcript.current.scrollTop = 0;
+  }, [quoteOpen]);
 
   useEffect(() => {
     if (!failure?.retryAt) {
@@ -156,6 +164,8 @@ export default function ChatWidget() {
     setBusy(false);
     setFailure(null);
     setRetrySeconds(0);
+    setQuoteOpen(false);
+    setQuoteDetails(EMPTY_QUOTE_DETAILS);
     composer.current?.focus();
   }
 
@@ -177,7 +187,16 @@ export default function ChatWidget() {
             </button>
           </header>
 
-          <div className="br-chat-transcript" ref={transcript} role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions text">
+          <div className="br-chat-transcript" ref={transcript} role={quoteOpen ? undefined : "log"} aria-label={quoteOpen ? "Project details" : "Conversation"} aria-live={quoteOpen ? undefined : "polite"} aria-relevant={quoteOpen ? undefined : "additions text"}>
+            {quoteOpen ? (
+              <ChatQuoteForm
+                details={quoteDetails}
+                onDetailsChange={(field, value) => setQuoteDetails(previous => ({ ...previous, [field]: value }))}
+                visitorMessages={messages.filter(message => message.role === "user").map(message => message.content)}
+                onBack={() => setQuoteOpen(false)}
+              />
+            ) : (
+              <>
             <div className="br-chat-intro">
               <span className="br-chat-eyebrow">FROM VISION TO REALITY</span>
               <h2>Let’s build<br /><em>something exceptional.</em></h2>
@@ -218,10 +237,18 @@ export default function ChatWidget() {
                 </div>
               </div>
             )}
+              </>
+            )}
           </div>
 
           <footer className="br-chat-footer">
-            <a className="br-chat-contact" href="/contact">Prefer a conversation with our team? <span>Get in touch <ArrowUpRight size={12} aria-hidden="true" /></span></a>
+            {!quoteOpen && (
+              <div className="br-chat-actions" aria-label="Project inquiry options">
+                <button type="button" onClick={() => setQuoteOpen(true)}><ClipboardList size={14} aria-hidden="true" /> Request a quote</button>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp <ArrowUpRight size={13} aria-hidden="true" /></a>
+              </div>
+            )}
+            {!quoteOpen && (
             <form className="br-chat-composer" onSubmit={(event) => { event.preventDefault(); send(); }}>
               <label className="br-chat-sr-only" htmlFor="br-chat-message">Message BR Construction assistant</label>
               <textarea
@@ -245,6 +272,7 @@ export default function ChatWidget() {
                 <Send size={17} aria-hidden="true" />
               </button>
             </form>
+            )}
             <p className="br-chat-caution">AI can make mistakes. Our team confirms quotes and project details.</p>
             <p className="br-chat-privacy">AI assistant · Messages processed by Groq. Please avoid sensitive information. <a href="/privacy">Privacy</a></p>
           </footer>

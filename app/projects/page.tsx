@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ProjectExplorer from "@/components/ProjectExplorer";
+import { VerifiedCaseStudies } from "@/components/CompanyProof";
 export const metadata: Metadata = {
   title: "Project Collection",
   description:
@@ -26,6 +27,7 @@ export default function Projects() {
         that could inspire your own extraordinary space.
       </p>
       <ProjectExplorer expanded />
+      <VerifiedCaseStudies />
     </main>
   );
 }

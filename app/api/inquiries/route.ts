@@ -1,6 +1,12 @@
 import { validateInquiry } from "@/lib/validations";
 import { getInquiryEnvironment, isInquiryStorageConfigured, getInquiryClientAddress } from "@/lib/inquiry-runtime";
 import { claimRateLimit, saveInquiry, setInquiryNotificationStatus } from "@/lib/inquiry-store";
+import { getInitialInquiryNotificationStatus, sendInquiryNotification } from "@/lib/inquiry-notification";
+import type { InquiryRecord } from "@/lib/inquiry-store.types";
+import { company } from "@/data/company";
+
+export const runtime = "nodejs";
+export const maxDuration = 60;
 
 const MAX_BODY_BYTES = 16 * 1024;
 const RESPONSE_HEADERS = {
@@ -133,6 +139,13 @@ export async function POST(request: Request) {
     consent: _consent,
     ...details
   } = result.data;
+  const record: InquiryRecord = {
+    id,
+    ...details,
+    createdAt: now,
+    consentAt: now,
+    notificationStatus: getInitialInquiryNotificationStatus(env),
+  };
   try {
     const key = await rateLimitKey(request);
     const limit = await claimRateLimit(key, now);
@@ -147,15 +160,7 @@ export async function POST(request: Request) {
         { "Retry-After": String(limit.retryAfter) },
       );
     }
-    await saveInquiry({
-      id,
-      ...details,
-      createdAt: now,
-      consentAt: now,
-      notificationStatus: env.INQUIRY_NOTIFICATION_WEBHOOK
-        ? "pending"
-        : "not_configured",
-    });
+    await saveInquiry(record);
   } catch {
     console.error("Inquiry persistence failed; no confirmation was sent.");
     return respond(
@@ -169,38 +174,9 @@ export async function POST(request: Request) {
   }
 
   // An inquiry is accepted only after storage confirms it. Notifications are optional.
-  let notification: "delivered" | "not_configured" | "failed" =
-    "not_configured";
-  if (env.INQUIRY_NOTIFICATION_WEBHOOK) {
-    notification = "failed";
-    try {
-      const webhookUrl = new URL(env.INQUIRY_NOTIFICATION_WEBHOOK);
-      if (webhookUrl.protocol !== "https:")
-        throw new Error("Webhook requires HTTPS");
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        redirect: "error",
-        headers: {
-          "Content-Type": "application/json",
-          ...(env.INQUIRY_NOTIFICATION_TOKEN
-            ? { Authorization: `Bearer ${env.INQUIRY_NOTIFICATION_TOKEN}` }
-            : {}),
-        },
-        body: JSON.stringify({
-          event: "inquiry.created",
-          id,
-          createdAt: new Date(now).toISOString(),
-          ...details,
-        }),
-        signal: AbortSignal.timeout(5000),
-      });
-      notification = webhookResponse.ok ? "delivered" : "failed";
-      await webhookResponse.body?.cancel();
-    } catch {
-      console.error(
-        "Inquiry saved, but the notification webhook did not accept it.",
-      );
-    }
+  const notification = await sendInquiryNotification(record, env, { defaultRecipient: company.email });
+  if (notification !== "not_configured") {
+    if (notification === "failed") console.error("Inquiry saved, but its notification was not accepted.");
     try {
       await setInquiryNotificationStatus(id, notification);
     } catch {

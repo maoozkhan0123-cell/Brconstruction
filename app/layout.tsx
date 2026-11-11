@@ -5,6 +5,7 @@ import ChatWidget from "@/components/ChatWidget";
 import "./globals.css";
 import "./contact-details.css";
 import "./chat-widget.css";
+import "./company-proof.css";
 import { company } from "@/data/company";
 import { getSiteOrigin } from "@/lib/site-url";
 const origin = getSiteOrigin();

@@ -26,6 +26,19 @@
 }
 .contact-detail > a:hover,
 .contact-phone-links > a:hover { color: var(--gold); }
+.contact-details .contact-phone-links > a.contact-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 10px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #c5a05966;
+  color: var(--gold);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.contact-whatsapp svg { width: 12px; height: 12px; }
 .contact-detail--office { grid-column: 1 / -1; }
 .contact-detail address {
   color: #a8aaa8;
@@ -96,4 +109,13 @@
   .contact-details--footer .contact-phone-links > a,
   .contact-details--footer address { font-size: 12px; }
   .footer-disclosure { align-items: flex-start; flex-direction: column; gap: 15px; }
+}
+.inquiry-draft-notice {
+  margin: 0 0 24px;
+  padding: 15px 17px;
+  border: 1px solid #c5a05966;
+  background: #c5a0590b;
+  color: var(--ivory);
+  font-size: 12px;
+  line-height: 1.8;
 }

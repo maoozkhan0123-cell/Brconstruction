@@ -5,6 +5,13 @@ export function getInquiryEnvironment() {
     INQUIRY_RATE_LIMIT_SECRET: process.env.INQUIRY_RATE_LIMIT_SECRET || process.env.BLOB_READ_WRITE_TOKEN || process.env.TURSO_AUTH_TOKEN || process.env.LIBSQL_AUTH_TOKEN,
     INQUIRY_NOTIFICATION_WEBHOOK: process.env.INQUIRY_NOTIFICATION_WEBHOOK,
     INQUIRY_NOTIFICATION_TOKEN: process.env.INQUIRY_NOTIFICATION_TOKEN,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
+    INQUIRY_EMAIL_FROM: process.env.INQUIRY_EMAIL_FROM,
+    INQUIRY_EMAIL_TO: process.env.INQUIRY_EMAIL_TO,
+    SMTP_SUPPORTED: true,
   };
 }
 

@@ -1,24 +1,15 @@
 "use client";
 import { useEffect, useState, type FormEvent, type FocusEvent } from "react";
 import { Arrow } from "./Icons";
-const options = [
-  "Architecture & Planning",
-  "Structural Engineering",
-  "Residential Construction",
-  "Commercial Construction",
-  "Interior Design",
-  "Renovation & Turnkey Delivery",
-  "Other",
-];
-const serviceMap: Record<string, string> = {
-  "architecture-engineering": "Architecture & Planning",
-  "residential-commercial-construction": "Residential Construction",
-  "interior-design": "Interior Design",
-  "turnkey-renovation": "Renovation & Turnkey Delivery",
-};
+import { inquiryServiceOptions as options, normalizeInquiryService } from "@/data/inquiry-services";
+import { takeInquiryDraft } from "@/lib/inquiry-draft";
 export default function ContactForm() {
   const [service, setService] = useState("");
   const [project, setProject] = useState("");
+  const [location, setLocation] = useState("");
+  const [budget, setBudget] = useState("");
+  const [description, setDescription] = useState("");
+  const [draftNotice, setDraftNotice] = useState("");
   const [startedAt, setStartedAt] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<
@@ -31,11 +22,24 @@ export default function ContactForm() {
     const sync = () => {
       const params = new URLSearchParams(window.location.search);
       const selected = params.get("service");
-      if (selected)
-        setService(
-          serviceMap[selected] || (options.includes(selected) ? selected : ""),
-        );
-      setProject(params.get("project") || "");
+      if (selected) setService(normalizeInquiryService(selected));
+      setProject((params.get("project") || "").slice(0, 120));
+      const token = params.get("draft");
+      if (token) {
+        const draft = takeInquiryDraft(token);
+        if (draft) {
+          setService(draft.service);
+          setLocation(draft.location);
+          setBudget(draft.budget);
+          setDescription(draft.description);
+          setDraftNotice("Your project brief is ready. Review the details below, then add your contact information to request a quotation.");
+        } else {
+          setDraftNotice("Your project brief could not be carried over. Please add your project details below.");
+        }
+        params.delete("draft");
+        const query = params.toString();
+        window.history.replaceState(window.history.state, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+      }
     };
     sync();
     window.addEventListener("br:inquiry", sync);
@@ -111,6 +115,10 @@ export default function ContactForm() {
       setMessage(result.message || "Your project inquiry has been received.");
       setStatus("success");
       form.reset();
+      setLocation("");
+      setBudget("");
+      setDescription("");
+      setDraftNotice("");
     } catch (error) {
       setStatus("error");
       setMessage(
@@ -158,6 +166,10 @@ export default function ContactForm() {
             setStartedAt(Date.now());
             setService("");
             setProject("");
+            setLocation("");
+            setBudget("");
+            setDescription("");
+            setDraftNotice("");
           }}
         >
           Begin another inquiry <Arrow />
@@ -165,11 +177,12 @@ export default function ContactForm() {
       </div>
     );
   return (
-    <form className="inquiry-form" onSubmit={submit} noValidate>
+    <form id="project-inquiry" className="inquiry-form" onSubmit={submit} noValidate>
       <div className="form-heading">
         <span className="section-label">TELL US WHAT YOU HAVE IN MIND</span>
         <span className="form-required">* Required</span>
       </div>
+      {draftNotice && <p className="inquiry-draft-notice" role="status">{draftNotice}</p>}
       {project && (
         <p className="project-context">
           Inspired by <strong>{project}</strong>
@@ -245,6 +258,8 @@ export default function ContactForm() {
           </label>
           <input
             {...props("location")}
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
             autoComplete="address-level2"
             placeholder="City, country"
             required
@@ -256,6 +271,8 @@ export default function ContactForm() {
           <label htmlFor="budget">Estimated budget</label>
           <input
             {...props("budget")}
+            value={budget}
+            onChange={(event) => setBudget(event.target.value)}
             placeholder="Amount and currency, if known"
             maxLength={100}
           />
@@ -272,6 +289,8 @@ export default function ContactForm() {
           </label>
           <textarea
             {...props("description")}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
             placeholder="The space you’re imagining. What matters to you. Where we can help."
             rows={3}
             required

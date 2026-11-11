@@ -39,6 +39,12 @@ Next.js reads local configuration from `.env.local`. Configure hosted values in 
 | `INQUIRY_RATE_LIMIT_SECRET` | Recommended long random server-only value used to HMAC the network identifier for rate limiting. |
 | `INQUIRY_NOTIFICATION_WEBHOOK` | Optional approved HTTPS endpoint that accepts a JSON `inquiry.created` event and sends email or creates a CRM record. |
 | `INQUIRY_NOTIFICATION_TOKEN` | Optional bearer token sent only to the configured notification endpoint. |
+| `SMTP_HOST` | Business email provider's SMTP hostname. |
+| `SMTP_PORT` | `465` for implicit TLS or `587` for required STARTTLS. |
+| `SMTP_USER` | Server-only business SMTP login. |
+| `SMTP_PASSWORD` | Server-only SMTP password or provider-issued app password. |
+| `INQUIRY_EMAIL_FROM` | Sender mailbox approved by the SMTP provider. |
+| `INQUIRY_EMAIL_TO` | Optional company-controlled recipient; defaults to `admin@brconstruction.services`. |
 | `GROQ_API_KEY` | Server-only Groq key for the website's AI assistant. |
 | `GROQ_CHAT_MODEL` | Optional Groq chat model; defaults to `openai/gpt-oss-20b`. |
 | `NEXT_PUBLIC_SITE_URL` | Optional public canonical origin, such as the final HTTPS custom domain. |
@@ -46,9 +52,49 @@ Next.js reads local configuration from `.env.local`. Configure hosted values in 
 
 `LIBSQL_DATABASE_URL` and `LIBSQL_AUTH_TOKEN` are accepted aliases for the corresponding Turso variables. Use one consistent pair. Leave the optional video unset to use the default poster photograph. Rebuild after changing a public value; a video URL must never contain a private access token.
 
-The notification event contains `event`, `id`, an ISO `createdAt`, and the submitted project/contact fields. The receiver should authenticate requests, handle repeated event IDs safely, and return success only when it accepts the event. The application uses a five-second timeout and does not automatically retry failed notifications.
+When SMTP is not configured, the optional notification webhook receives `event`, `id`, an ISO `createdAt`, and the submitted project/contact fields. The receiver should authenticate requests, handle repeated event IDs safely, and return success only when it accepts the event. The webhook uses a five-second timeout and does not automatically retry failed notifications.
 
-An inquiry is saved before the API returns HTTP 201. With Blob storage, each accepted inquiry is a private JSON object, and the application confirms the write before acknowledging it. Its `notification` value is `delivered`, `failed`, or `not_configured`; `delivered` means the webhook accepted the event, not that a human received an email. A failed or unconfigured notification does not erase a saved inquiry. Displaying the company email address on the website does not configure email delivery.
+An inquiry is saved before the API returns HTTP 201. With Blob storage, each accepted inquiry is a private JSON object, and the application confirms the write before acknowledging it. Its `notification` value is `delivered`, `failed`, or `not_configured`; `delivered` means the SMTP server accepted the company recipient or the webhook accepted the event, not that a human received an email. A failed or unconfigured notification does not erase a saved inquiry. Displaying the company email address on the website does not configure email delivery.
+
+## Business email alerts
+
+Configure the six SMTP/sender values above in ignored `.env.local` for local work
+and in the Vercel production environment before redeploying. Use the business mail
+provider's verified hostname, mailbox, and SMTP/app password. The sender must be
+authorized for that mailbox. Do not paste passwords into chat, commit them, or use
+a `NEXT_PUBLIC_*` variable. Recipient configuration is server-controlled; a visitor
+cannot choose an email destination. Their validated email is used only as Reply-To.
+
+SMTP takes priority over the optional webhook, so one inquiry does not generate
+duplicate notifications through both channels. Port 25, plaintext authentication,
+TLS downgrades, and invalid certificates are rejected. The send attempt has a
+15-second deadline. A partial SMTP configuration records a notification failure
+without losing the saved inquiry. No emails are sent until valid settings exist.
+Verify one clearly labeled test inquiry and the company mailbox after setup.
+
+## Quotation handoff and WhatsApp
+
+The assistant's **Request a quote** flow collects a service, location, optional
+budget, and project notes. **Continue to inquiry** creates a short-lived draft in
+the current tab's session storage. The URL contains only an opaque reference, and
+the contact form consumes the draft once. The visitor reviews the fields, supplies
+contact information, and gives consent before any submission. Drafts expire after
+30 minutes; missing or blocked browser storage produces a manual-entry notice.
+Chat text is copied only when the visitor explicitly selects **Use my messages**.
+
+WhatsApp links use the owner-confirmed `+92-332-2249951` number configured in
+`data/company.ts`. They open a generic project message; the visitor sends it.
+
+## Approved company evidence
+
+`data/company-proof.ts` supports approved team members, genuine testimonials, and
+real case studies, including before/after images. These datasets are intentionally
+empty because no approved content has been supplied. About and Projects sections
+render only when published records exist. Keep the original illustrative portfolio
+clearly labeled; do not describe stock photographs as completed commissions.
+Add local photography with meaningful alternative text, dimensions, and explicit
+publication permission. Confirm names, claims, quotations, and photo rights with
+the company and the people involved before adding a record.
 
 ## Website chat assistant
 

@@ -1,4 +1,4 @@
-import { company, officeMapUrl } from "@/data/company";
+import { company, officeMapUrl, whatsappUrl } from "@/data/company";
 import { Arrow } from "./Icons";
 
 export default function ContactDetails({ compact = false }: { compact?: boolean }) {
@@ -12,6 +12,7 @@ export default function ContactDetails({ compact = false }: { compact?: boolean 
         <span className="contact-detail-label">CALL US</span>
         <div className="contact-phone-links">
           {company.phones.map(phone => <a href={`tel:${phone.number}`} key={phone.number}>{phone.label}</a>)}
+          <a className="contact-whatsapp" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Discuss your project on WhatsApp (opens in a new tab)">Message on WhatsApp <Arrow diagonal /></a>
         </div>
       </div>
       <div className="contact-detail contact-detail--office">

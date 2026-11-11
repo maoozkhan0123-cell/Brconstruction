@@ -1,14 +1,7 @@
 import { z } from "zod";
+import { inquiryServiceOptions } from "../data/inquiry-services.ts";
 
-export const inquiryServices = [
-  "Architecture & Planning",
-  "Structural Engineering",
-  "Residential Construction",
-  "Commercial Construction",
-  "Interior Design",
-  "Renovation & Turnkey Delivery",
-  "Other",
-] as const;
+export const inquiryServices = inquiryServiceOptions;
 
 const optionalText = (maximum: number) =>
   z.string().trim().max(maximum).optional().default("");

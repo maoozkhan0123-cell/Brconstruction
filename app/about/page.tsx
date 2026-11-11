@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { Arrow } from "@/components/Icons";
+import CompanyProof from "@/components/CompanyProof";
 export const metadata: Metadata = {
   title: "Our Approach",
   description:
@@ -67,6 +68,7 @@ export default function About() {
             </p>
           </section>
         </div>
+        <CompanyProof />
         <section className="detail-outcome">
           <span className="section-label">LET’S EXPLORE WHAT’S POSSIBLE</span>
           <h2 className="display-heading">
