@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, MessageCircle, Minus, RotateCcw, Send, Sparkles, X } from "lucide-react";
+import { ArrowUpRight, Minus, RotateCcw, Send, Sparkles, X } from "lucide-react";
 import { company } from "@/data/company";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
@@ -13,6 +13,15 @@ const STARTERS = [
   "Where is your office?",
 ];
 const MAX_MESSAGE_LENGTH = 1200;
+
+function BotImage() {
+  return (
+    <picture className="br-chat-mascot" aria-hidden="true">
+      <source media="(prefers-reduced-motion: reduce)" srcSet="/images/br-chatbot-still.webp" />
+      <img src="/images/br-chatbot.webp" alt="" width={160} height={159} decoding="async" draggable={false} />
+    </picture>
+  );
+}
 
 function requestHistory(messages: ChatMessage[]) {
   const history = messages.slice(-10);
@@ -155,7 +164,7 @@ export default function ChatWidget() {
       {open && (
         <div className="br-chat-panel" id="br-chat-panel" role="dialog" aria-modal="false" aria-label="BR Construction assistant">
           <header className="br-chat-header">
-            <div className="br-chat-avatar" aria-hidden="true">BR<span /></div>
+            <div className="br-chat-avatar" aria-hidden="true"><BotImage /><span /></div>
             <div className="br-chat-heading">
               <p>BR Construction</p>
               <span><Sparkles size={11} aria-hidden="true" /> Your project assistant</span>
@@ -251,7 +260,7 @@ export default function ChatWidget() {
         aria-controls="br-chat-panel"
         onClick={() => { if (open) close(); else setOpen(true); }}
       >
-        {open ? <X size={22} aria-hidden="true" /> : <MessageCircle size={22} aria-hidden="true" />}
+        {open ? <X size={22} aria-hidden="true" /> : <BotImage />}
         <span>{open ? "Close chat" : "Let’s talk"}</span>
         {!open && <span className="br-chat-launcher-dot" aria-hidden="true" />}
       </button>
