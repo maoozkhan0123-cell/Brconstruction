@@ -4,6 +4,7 @@ import { claimRateLimit, saveInquiry, setInquiryNotificationStatus } from "@/lib
 import { getInitialInquiryNotificationStatus, sendInquiryNotification } from "@/lib/inquiry-notification";
 import type { InquiryRecord } from "@/lib/inquiry-store.types";
 import { company } from "@/data/company";
+import { isAllowedRequestOrigin } from "@/lib/request-origin";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -78,12 +79,7 @@ async function rateLimitKey(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const origin = request.headers.get("origin");
-  if (
-    !origin ||
-    origin !== new URL(request.url).origin ||
-    request.headers.get("sec-fetch-site") === "cross-site"
-  ) {
+  if (!isAllowedRequestOrigin(request)) {
     return respond(
       { ok: false, error: "Please send your inquiry from this website." },
       403,

@@ -17,6 +17,11 @@ Open `http://localhost:3000`, or the address printed if that port is occupied. F
 
 Copy `.env.example` to an ignored `.env.local` and configure durable storage before testing accepted inquiries. The visual pages work without storage; the form returns an error when an inquiry cannot be saved.
 
+Keep `.env.example` as an empty template. Put real API keys and SMTP credentials
+only in ignored `.env.local`; Next.js does not load values from `.env.example`.
+The local development APIs accept both `localhost` and `127.0.0.1` on the same
+port, while deployed requests retain strict same-origin validation.
+
 ## Deploy to Vercel
 
 1. Import [the GitHub repository](https://github.com/maoozkhan0123-cell/Brconstruction) into Vercel. Select **Next.js**, use the repository root, and leave the installation and build commands from `vercel.json`: `npm ci` and `npm run build`.

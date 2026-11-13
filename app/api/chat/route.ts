@@ -3,6 +3,7 @@ import { completeChat, ChatProviderError } from "@/lib/chat-provider";
 import { getChatSystemPrompt } from "@/lib/chat-knowledge";
 import { getChatRateKey, claimBlobChatRateLimit, claimLocalChatRateLimit } from "@/lib/chat-rate-limit";
 import { getInquiryClientAddress } from "@/lib/inquiry-runtime";
+import { isAllowedRequestOrigin } from "@/lib/request-origin";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -14,7 +15,7 @@ function respond(body: unknown, status = 200, extraHeaders: Record<string, strin
 
 export async function POST(request: Request) {
   const origin = new URL(request.url).origin;
-  if (request.headers.get("origin") !== origin || request.headers.get("sec-fetch-site") === "cross-site") {
+  if (!isAllowedRequestOrigin(request)) {
     return respond({ ok: false, error: "Please open the assistant from this website." }, 403);
   }
   if (request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "application/json") {
