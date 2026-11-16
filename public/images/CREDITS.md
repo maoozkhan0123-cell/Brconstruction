@@ -40,6 +40,19 @@ Islamabad photograph was resized and compressed to WebP. No architectural
 elements were generated or changed. The old commercial collection URL is
 retained for the renamed Lahore bungalow reference, so existing links work.
 
-## Brand identity
+## Brand identity and owner-supplied process images
 
-The BR logo was supplied by the site owner as `public/BR Construction Logo.png`. `br-construction-logo.webp` is a resized, compressed copy for the website. The original artwork is retained; display framing is applied in CSS.
+The current BR Construction logo was supplied by the site owner as
+`public/WhatsApp Image 2026-11-16 at 11.43.37 AM.jpeg`.
+`br-construction-logo.webp` and `public/favicon.png` are optimized copies used
+by the website.
+
+The owner also supplied the four process photographs in `public/`:
+
+- `Architect’s Blueprint Workspace.png` → `process-plan.webp`
+- `Architectural Budget Planning Workspace.png` → `process-budget.webp`
+- `Golden-Hour Urban Construction Site.png` → `process-build.webp`
+- `Auram One Key Handover Celebration.png` → `process-handover.webp`
+
+The WebP copies are resized and compressed for the process-card backgrounds;
+the supplied source files remain intact.

@@ -155,23 +155,54 @@
 .construction-process-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
+  gap: 18px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .construction-process-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  isolation: isolate;
   min-width: 0;
-  padding: 0 clamp(18px, 2.1vw, 34px);
-  text-align: center;
+  min-height: 540px;
+  overflow: hidden;
+  border: 1px solid rgba(24, 50, 71, 0.16);
+  background: #111820;
+  box-shadow: 0 18px 46px rgba(20, 30, 38, 0.12);
+  color: #fff;
 }
 
-.construction-process-card + .construction-process-card {
-  border-left: 1px solid var(--process-rule);
+.construction-process-background,
+.construction-process-scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.construction-process-background {
+  z-index: -2;
+  max-width: none;
+  object-fit: cover;
+  filter: saturate(0.83) contrast(1.02);
+  transition: transform 500ms ease;
+}
+
+.construction-process-scrim {
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(7, 13, 18, 0.23) 0%, rgba(7, 13, 18, 0.35) 35%, rgba(7, 13, 18, 0.95) 100%),
+    linear-gradient(90deg, rgba(7, 13, 18, 0.34), transparent 75%);
+}
+
+.construction-process-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 540px;
+  padding: 28px 26px 30px;
+  text-align: left;
 }
 
 .construction-process-icon {
@@ -179,6 +210,7 @@
   place-items: center;
   width: 88px;
   height: 88px;
+  flex: 0 0 88px;
   border-radius: 50%;
   background: #c8af7c;
   color: var(--process-navy);
@@ -196,37 +228,37 @@
 .construction-process-title {
   display: flex;
   align-items: baseline;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
-  margin: 24px 0 18px;
-  color: var(--process-navy);
-  font: 600 22px / 1.35 var(--sans);
+  margin: auto 0 16px;
+  color: #fff;
+  font: 600 25px / 1.3 var(--sans);
   letter-spacing: -0.4px;
 }
 
 .construction-process-number {
-  color: #876a32;
+  color: #e7c478;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
 .construction-process-copy {
-  max-width: 280px;
+  max-width: 310px;
 }
 
 .construction-process-copy h4 {
   margin-bottom: 11px;
-  color: var(--process-navy);
+  color: #fff;
   font-size: 13px;
   font-weight: 600;
   line-height: 1.6;
 }
 
 .construction-process-copy > p {
-  color: #53616c;
-  font-size: 14px;
-  line-height: 1.8;
+  color: #e2e5e7;
+  font-size: 13px;
+  line-height: 1.75;
 }
 
 .construction-process-footer {
@@ -324,6 +356,10 @@
   .construction-service-link:hover svg {
     transform: translate(2px, -2px);
   }
+
+  .construction-process-card:hover .construction-process-background {
+    transform: scale(1.035);
+  }
 }
 
 @media (max-width: 1100px) {
@@ -338,11 +374,7 @@
 
   .construction-process-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 50px;
-  }
-
-  .construction-process-card:nth-child(odd) {
-    border-left: 0;
+    gap: 18px;
   }
 
   .construction-process-copy {
@@ -387,8 +419,11 @@
   }
 
   .construction-process-card {
-    padding-right: 20px;
-    padding-left: 20px;
+    min-height: 500px;
+  }
+
+  .construction-process-content {
+    min-height: 500px;
   }
 
   .construction-process-footer {
@@ -439,21 +474,20 @@
 
   .construction-process-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 34px;
+    gap: 18px;
   }
 
   .construction-process-card {
-    padding: 0;
-  }
-
-  .construction-process-card + .construction-process-card {
-    padding-top: 34px;
-    border-top: 1px solid var(--process-rule);
-    border-left: 0;
+    min-height: 480px;
   }
 
   .construction-process-copy {
     max-width: 340px;
+  }
+
+  .construction-process-content {
+    min-height: 480px;
+    padding: 25px 24px 28px;
   }
 
   .construction-process-footer {
@@ -475,6 +509,7 @@
 @media (prefers-reduced-motion: reduce) {
   .construction-service-card,
   .construction-service-link svg,
+  .construction-process-background,
   .construction-faq > summary > svg {
     transition: none;
   }

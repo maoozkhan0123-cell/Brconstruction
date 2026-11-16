@@ -62,6 +62,8 @@ export interface ConstructionStage {
   title: string;
   subtitle: string;
   description: string;
+  image: string;
+  imagePosition: string;
   icon: "plan" | "budget" | "build" | "handover";
 }
 
@@ -71,6 +73,8 @@ export const processStages: ConstructionStage[] = [
     subtitle: "Understand the project",
     description:
       "Discuss your site, requirements, and priorities. Coordinate the design and technical decisions that define the scope.",
+    image: "/images/process-plan.webp",
+    imagePosition: "center 48%",
     icon: "plan",
   },
   {
@@ -78,6 +82,8 @@ export const processStages: ConstructionStage[] = [
     subtitle: "Make informed decisions",
     description:
       "Review the scope, material choices, estimated costs, and programme so the next steps have a clear starting point.",
+    image: "/images/process-budget.webp",
+    imagePosition: "51% center",
     icon: "budget",
   },
   {
@@ -85,6 +91,8 @@ export const processStages: ConstructionStage[] = [
     subtitle: "Coordinate the execution",
     description:
       "Bring site work, procurement, and supervision together, with progress reviews and attention to construction details.",
+    image: "/images/process-build.webp",
+    imagePosition: "center 46%",
     icon: "build",
   },
   {
@@ -92,6 +100,8 @@ export const processStages: ConstructionStage[] = [
     subtitle: "Review the final details",
     description:
       "Walk through the completed scope, review finishing details, and coordinate the essential inspections and handover documents.",
+    image: "/images/process-handover.webp",
+    imagePosition: "53% center",
     icon: "handover",
   },
 ];

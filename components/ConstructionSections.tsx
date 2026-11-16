@@ -151,16 +151,30 @@ export function ConstructionProcess() {
           const Icon = stageIcons[stage.icon];
           return (
             <li className="construction-process-card" key={stage.title}>
-              <span className="construction-process-icon" aria-hidden="true">
-                <Icon size={40} strokeWidth={1.6} aria-hidden="true" />
-              </span>
-              <h3 className="construction-process-title">
-                <span className="construction-process-number">{String(index + 1).padStart(2, "0")}</span>{" "}
-                {stage.title}
-              </h3>
-              <div className="construction-process-copy">
-                <h4>{stage.subtitle}</h4>
-                <p>{stage.description}</p>
+              <img
+                className="construction-process-background"
+                src={stage.image}
+                alt=""
+                aria-hidden="true"
+                width="1200"
+                height="1400"
+                loading="lazy"
+                decoding="async"
+                style={{ objectPosition: stage.imagePosition }}
+              />
+              <span className="construction-process-scrim" aria-hidden="true" />
+              <div className="construction-process-content">
+                <span className="construction-process-icon" aria-hidden="true">
+                  <Icon size={40} strokeWidth={1.6} aria-hidden="true" />
+                </span>
+                <h3 className="construction-process-title">
+                  <span className="construction-process-number">{String(index + 1).padStart(2, "0")}</span>{" "}
+                  {stage.title}
+                </h3>
+                <div className="construction-process-copy">
+                  <h4>{stage.subtitle}</h4>
+                  <p>{stage.description}</p>
+                </div>
               </div>
             </li>
           );

@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
-  icons: { icon: "/favicon.svg?v=br-logo" },
+  icons: { icon: "/favicon.png?v=br-construction-logo-2" },
 };
 export default function RootLayout({
   children,
