@@ -5,7 +5,7 @@ import CompanyProof from "@/components/CompanyProof";
 export const metadata: Metadata = {
   title: "Our Approach",
   description:
-    "Meet the thinking behind BR Construction. An integrated practice connecting architecture, engineering, construction, and interior design.",
+    "Meet BR Construction: a construction-led company connecting site execution, engineering, architecture, and interior design.",
   alternates: { canonical: "/about" },
 };
 export default function About() {
@@ -40,10 +40,10 @@ export default function About() {
             with <em>understanding.</em>
           </h2>
           <p>
-            At BR Construction, architecture is more than design, and
-            construction is more than execution. We bring together imagination,
-            engineering intelligence, and craftsmanship to create environments
-            that elevate everyday living.
+            Construction is our core. We connect practical site execution with
+            coordinated engineering, architectural thinking, and interior
+            design, shaping a clear path from the initial brief to the final
+            finish.
           </p>
         </div>
         <div className="detail-grid">
@@ -51,7 +51,7 @@ export default function About() {
             <span className="section-label">01 / CONNECTED THINKING</span>
             <h2>Every discipline, in conversation.</h2>
             <p>
-              Architecture, structural engineering, construction, and interiors
+              Construction, structural engineering, architecture, and interiors
               share a single purpose: a space that works as beautifully as it
               feels. Our integrated approach brings those perspectives together
               from the outset.

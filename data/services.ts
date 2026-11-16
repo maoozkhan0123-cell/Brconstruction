@@ -15,35 +15,10 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    slug: "architecture-engineering",
-    title: "Architecture & Structural Engineering",
-    shortTitle: "Architecture & Engineering",
-    number: "01",
-    description: "Visionary concepts, grounded in engineering intelligence.",
-    intro:
-      "We bring architectural thinking and structural discipline into the same conversation, developing a clear path from early spatial ideas to coordinated technical documentation.",
-    capabilities: [
-      "Architectural conceptualization",
-      "2D and 3D design",
-      "BIM modeling",
-      "Structural analysis",
-      "Civil engineering",
-      "Technical drawings",
-      "Regulatory planning and permit coordination",
-    ],
-    approach: [
-      "Understand the brief, site, constraints, and architectural ambition.",
-      "Develop concepts and coordinate structural and spatial decisions.",
-      "Prepare technical documentation and an appropriate approval strategy.",
-    ],
-    image: "/images/project-01.webp",
-    projectCategory: "Architecture",
-  },
-  {
     slug: "residential-commercial-construction",
     title: "Residential & Commercial Construction",
     shortTitle: "Construction",
-    number: "02",
+    number: "01",
     description: "Considered execution. Uncompromising attention to detail.",
     intro:
       "A well-conceived project deserves carefully coordinated execution. Our construction approach connects site planning, engineering, procurement, and supervision around a clearly defined scope.",
@@ -63,6 +38,31 @@ export const services: Service[] = [
     ],
     image: "/images/project-03.webp",
     projectCategory: "Construction",
+  },
+  {
+    slug: "architecture-engineering",
+    title: "Architecture & Structural Engineering",
+    shortTitle: "Architecture & Engineering",
+    number: "02",
+    description: "Visionary concepts, grounded in engineering intelligence.",
+    intro:
+      "We bring architectural thinking and structural discipline into the same conversation, developing a clear path from early spatial ideas to coordinated technical documentation.",
+    capabilities: [
+      "Architectural conceptualization",
+      "2D and 3D design",
+      "BIM modeling",
+      "Structural analysis",
+      "Civil engineering",
+      "Technical drawings",
+      "Regulatory planning and permit coordination",
+    ],
+    approach: [
+      "Understand the brief, site, constraints, and architectural ambition.",
+      "Develop concepts and coordinate structural and spatial decisions.",
+      "Prepare technical documentation and an appropriate approval strategy.",
+    ],
+    image: "/images/project-01.webp",
+    projectCategory: "Architecture",
   },
   {
     slug: "interior-design",

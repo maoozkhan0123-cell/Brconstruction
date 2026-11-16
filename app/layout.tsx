@@ -2,35 +2,39 @@ import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ChatWidget from "@/components/ChatWidget";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import "./globals.css";
 import "./contact-details.css";
 import "./chat-widget.css";
 import "./company-proof.css";
+import "./construction-hero.css";
+import "./construction-sections.css";
+import "./floating-whatsapp.css";
 import { company } from "@/data/company";
 import { getSiteOrigin } from "@/lib/site-url";
 const origin = getSiteOrigin();
 export const metadata: Metadata = {
   metadataBase: new URL(origin),
   title: {
-    default: "BR Construction — Architecting Visions. Constructing Legacies.",
+    default: "BR Construction — Constructing Legacies. Architecting Visions.",
     template: "%s | BR Construction",
   },
   description:
-    "Architecture, structural engineering, construction, and bespoke interiors. An integrated approach to extraordinary spaces, from concept to completion.",
+    "Residential and commercial construction, grey structure, renovation, engineering, and interiors in Karachi. A coordinated approach from planning to handover.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "BR Construction",
-    title: "BR Construction — Architecting Visions. Constructing Legacies.",
+    title: "BR Construction — Constructing Legacies. Architecting Visions.",
     description:
-      "Visionary architecture. Intelligent engineering. Extraordinary spaces.",
+      "Construction comes first. Coordinated engineering, architecture, and interiors, from planning to handover.",
     images: [
       {
-        url: "/images/hero.webp",
-        width: 1920,
-        height: 1280,
-        alt: "Contemporary architecture — illustrative design reference",
+        url: "/images/construction-hero-poster.webp",
+        width: 1280,
+        height: 720,
+        alt: "Construction planning visual from the BR Construction brand film",
       },
     ],
   },
@@ -65,6 +69,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
+        <FloatingWhatsApp />
         <ChatWidget />
         <script
           type="application/ld+json"
@@ -89,7 +94,7 @@ export default function RootLayout({
                 contactType: "project inquiries",
               })),
               description:
-                "Integrated architecture, engineering, construction, and interior design.",
+                "Construction-led residential and commercial delivery, supported by engineering, architecture, renovation, and interior design.",
             }),
           }}
         />

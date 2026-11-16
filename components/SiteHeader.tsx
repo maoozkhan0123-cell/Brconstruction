@@ -7,7 +7,7 @@ import BrandLogo from "./BrandLogo";
 const navigation = [
   ["Home", "/#home"],
   ["About", "/#about"],
-  ["Expertise", "/#expertise"],
+  ["Services", "/#expertise"],
   ["Projects", "/#projects"],
   ["Our Process", "/#process"],
   ["Contact", "/#contact"],
@@ -122,16 +122,9 @@ export default function SiteHeader() {
           Let’s discuss your vision <Arrow diagonal />
         </Link>
         <p className="menu-caption">
-          ARCHITECTING VISIONS. CONSTRUCTING LEGACIES.
+          CONSTRUCTING LEGACIES. ARCHITECTING VISIONS.
         </p>
       </dialog>
-      <Link
-        href="/#contact"
-        className={`floating-consultation ${scrolled ? "visible" : ""}`}
-        aria-label="Book a consultation"
-      >
-        Let’s talk <Arrow diagonal />
-      </Link>
     </>
   );
 }

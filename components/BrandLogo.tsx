@@ -14,7 +14,7 @@ export default function BrandLogo() {
       </span>
       <span className="brand-copy">
         <strong>BR<span>CONSTRUCTION</span></strong>
-        <small>ARCHITECTURE / ENGINEERING / BUILD</small>
+        <small>CONSTRUCTION / DESIGN / ENGINEERING</small>
       </span>
     </>
   );

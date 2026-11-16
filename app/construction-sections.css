@@ -1,0 +1,497 @@
+.construction-services {
+  background: var(--charcoal);
+}
+
+.construction-section-intro {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  align-items: end;
+  gap: clamp(32px, 6vw, 100px);
+  margin-bottom: 48px;
+}
+
+.construction-section-intro h2,
+.construction-process-intro h2,
+.construction-faq-intro h2 {
+  margin-top: 18px;
+  font: 400 clamp(40px, 4.5vw, 68px) / 1.04 var(--serif);
+  letter-spacing: -1.5px;
+}
+
+.construction-section-intro h2 em,
+.construction-faq-intro h2 em {
+  color: var(--gold);
+}
+
+.construction-section-aside > p {
+  max-width: 420px;
+  margin-bottom: 24px;
+  color: #b9babd;
+  line-height: 1.85;
+}
+
+.construction-section-aside .text-link,
+.construction-faq-intro .text-link {
+  color: var(--bright-gold);
+}
+
+.construction-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.construction-service-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(25px, 2.6vw, 42px);
+  border: 1px solid var(--border);
+  background: #111317;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.construction-service-card-primary {
+  border-top-color: var(--gold);
+  background: #1b1b19;
+}
+
+.construction-service-card:focus-within {
+  border-color: var(--gold);
+}
+
+.construction-service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.construction-service-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  color: var(--bright-gold);
+}
+
+.construction-service-number {
+  align-self: start;
+  color: #929395;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.construction-service-card h3 {
+  max-width: 310px;
+  margin-bottom: 18px;
+  font: 400 clamp(28px, 2.3vw, 36px) / 1.08 var(--serif);
+  letter-spacing: -0.3px;
+}
+
+.construction-service-card > p {
+  margin-bottom: 24px;
+  color: #b5b6ba;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.construction-service-detail {
+  display: block;
+  margin-top: auto;
+  padding-bottom: 22px;
+  color: #bdb6a6;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.construction-service-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+  color: var(--bright-gold);
+  font-size: 11px;
+  letter-spacing: 0.2px;
+}
+
+.construction-service-link svg {
+  transition: transform 180ms ease;
+}
+
+.construction-process {
+  background: var(--ivory);
+  color: var(--black);
+  color-scheme: light;
+}
+
+.construction-process-intro {
+  max-width: 950px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.construction-process .section-label {
+  color: #806333;
+}
+
+.construction-process-intro h2 em {
+  color: #806333;
+}
+
+.construction-process-intro > p:last-child {
+  margin-top: 23px;
+  color: #5b5d60;
+}
+
+.construction-mobile-break {
+  display: none;
+}
+
+.construction-process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.construction-process-card {
+  min-width: 0;
+  background: #faf9f5;
+  border: 1px solid rgba(13, 14, 17, 0.12);
+}
+
+.construction-process-visual {
+  position: relative;
+  isolation: isolate;
+  height: clamp(190px, 18.5vw, 280px);
+  overflow: hidden;
+  background: var(--charcoal);
+  color: var(--white);
+}
+
+.construction-process-visual > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.5);
+}
+
+.construction-process-visual::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, rgba(13, 14, 17, 0.36), rgba(13, 14, 17, 0.12) 35%, rgba(13, 14, 17, 0.88));
+}
+
+.construction-process-number,
+.construction-process-icon,
+.construction-process-visual h3 {
+  position: absolute;
+  z-index: 1;
+}
+
+.construction-process-number {
+  top: 23px;
+  left: 24px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.construction-process-icon {
+  top: 19px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  color: #efd5a2;
+  background: rgba(13, 14, 17, 0.6);
+  border: 1px solid rgba(239, 213, 162, 0.45);
+}
+
+.construction-process-visual h3 {
+  bottom: 23px;
+  left: 24px;
+  margin: 0;
+  font: 400 clamp(38px, 3.3vw, 50px) / 1 var(--serif);
+  letter-spacing: -0.8px;
+}
+
+.construction-process-copy {
+  padding: 26px 24px 29px;
+}
+
+.construction-process-copy h4 {
+  margin-bottom: 13px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.construction-process-copy > p {
+  color: #5b5d60;
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.construction-process-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.construction-process-footer > p {
+  color: #5b5d60;
+  font-size: 12px;
+}
+
+.construction-process-footer .text-link {
+  color: #70541e;
+}
+
+.construction-faqs {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  align-items: start;
+  gap: clamp(40px, 8vw, 140px);
+  background: #111317;
+}
+
+.construction-faq-intro h2 {
+  font-size: clamp(38px, 4.2vw, 62px);
+}
+
+.construction-faq-intro > p:not(.section-label) {
+  max-width: 340px;
+  margin: 25px 0;
+  color: #b5b6ba;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.construction-faq {
+  border-top: 1px solid var(--border);
+}
+
+.construction-faq:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.construction-faq > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 80px;
+  padding: 23px 0;
+  color: #e5e3dc;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.75;
+  list-style: none;
+}
+
+.construction-faq > summary::-webkit-details-marker {
+  display: none;
+}
+
+.construction-faq > summary > svg {
+  color: var(--gold);
+  transition: transform 180ms ease;
+}
+
+.construction-faq[open] > summary {
+  color: var(--bright-gold);
+}
+
+.construction-faq[open] > summary > svg {
+  transform: rotate(45deg);
+}
+
+.construction-faq > p {
+  max-width: 600px;
+  padding: 0 34px 27px 0;
+  color: #b5b6ba;
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+@media (hover: hover) {
+  .construction-service-card:hover {
+    border-color: rgba(197, 160, 89, 0.6);
+    background: #1b1c1f;
+  }
+
+  .construction-service-link:hover svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .construction-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .construction-service-card h3 {
+    max-width: 330px;
+    font-size: 34px;
+  }
+
+  .construction-process-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .construction-process-visual {
+    height: 235px;
+  }
+
+  .construction-process-copy {
+    padding: 27px;
+  }
+}
+
+@media (max-width: 760px) {
+  .construction-section-intro,
+  .construction-faqs {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+
+  .construction-section-intro {
+    margin-bottom: 33px;
+  }
+
+  .construction-section-aside > p {
+    max-width: 530px;
+    font-size: 13px;
+  }
+
+  .construction-service-card {
+    padding: 25px;
+  }
+
+  .construction-service-card h3 {
+    font-size: 29px;
+  }
+
+  .construction-service-top {
+    margin-bottom: 27px;
+  }
+
+  .construction-service-detail {
+    font-size: 9px;
+  }
+
+  .construction-process-intro {
+    margin-bottom: 32px;
+  }
+
+  .construction-process-intro > p:last-child {
+    max-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 13px;
+  }
+
+  .construction-process-visual {
+    height: 205px;
+  }
+
+  .construction-process-copy {
+    padding: 23px;
+  }
+
+  .construction-process-number,
+  .construction-process-visual h3 {
+    left: 23px;
+  }
+
+  .construction-process-footer {
+    flex-wrap: wrap;
+    row-gap: 15px;
+  }
+
+  .construction-faq-intro > p:not(.section-label) {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 560px) {
+  .construction-services.section-pad,
+  .construction-process.section-pad,
+  .construction-faqs.section-pad {
+    padding: 72px var(--gutter);
+  }
+
+  .construction-section-intro h2,
+  .construction-process-intro h2,
+  .construction-faq-intro h2 {
+    font-size: clamp(35px, 10vw, 47px);
+    letter-spacing: -0.9px;
+  }
+
+  .construction-service-grid,
+  .construction-process-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .construction-service-card {
+    padding: 28px;
+  }
+
+  .construction-service-card h3 {
+    max-width: 320px;
+    font-size: 34px;
+  }
+
+  .construction-service-detail {
+    font-size: 10px;
+  }
+
+  .construction-process-visual {
+    height: 215px;
+  }
+
+  .construction-process-visual h3 {
+    font-size: 45px;
+  }
+
+  .construction-process-copy {
+    padding: 24px 25px 27px;
+  }
+
+  .construction-process-copy > p {
+    font-size: 13px;
+  }
+
+  .construction-mobile-break {
+    display: block;
+  }
+
+  .construction-faq > summary {
+    min-height: 78px;
+    gap: 16px;
+  }
+
+  .construction-faq > p {
+    padding-right: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .construction-service-card,
+  .construction-service-link svg,
+  .construction-faq > summary > svg {
+    transition: none;
+  }
+}

@@ -1,9 +1,9 @@
 /** Shared form choices keep the chatbot handoff and inquiry form in agreement. */
 export const inquiryServiceOptions = [
-  "Architecture & Planning",
-  "Structural Engineering",
   "Residential Construction",
   "Commercial Construction",
+  "Architecture & Planning",
+  "Structural Engineering",
   "Interior Design",
   "Renovation & Turnkey Delivery",
   "Other",

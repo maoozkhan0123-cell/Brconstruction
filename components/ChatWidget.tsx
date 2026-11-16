@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ClipboardList, Minus, RotateCcw, Send, Sparkles, X } from "lucide-react";
-import { company, whatsappUrl } from "@/data/company";
+import { company } from "@/data/company";
 import ChatQuoteForm, { type QuoteDetails } from "@/components/ChatQuoteForm";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
@@ -245,7 +245,6 @@ export default function ChatWidget() {
             {!quoteOpen && (
               <div className="br-chat-actions" aria-label="Project inquiry options">
                 <button type="button" onClick={() => setQuoteOpen(true)}><ClipboardList size={14} aria-hidden="true" /> Request a quote</button>
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp <ArrowUpRight size={13} aria-hidden="true" /></a>
               </div>
             )}
             {!quoteOpen && (

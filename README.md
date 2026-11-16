@@ -2,6 +2,22 @@
 
 A responsive architecture, engineering, construction, and interior design website for BR Construction. Built with React, TypeScript, and the Next.js App Router, with a filterable concept portfolio, accessible image galleries, and a server-backed project inquiry form.
 
+The homepage now leads with **Constructing Legacies. Architecting Visions.**
+Construction service cards, a Plan / Budget / Build / Handover process, and
+project FAQs use the shared `data/construction.ts` content. Existing service
+URLs are preserved, with construction first in `data/services.ts`.
+
+The owner-supplied `public/gemini_generated_video_03951454.mp4` is retained as
+the source film. The hero streams `public/videos/br-construction-hero.mp4`, a
+silent H.264 version with fast-start metadata, and uses a WebP poster extracted
+from the film. Normal visits start muted inline playback automatically. Motion
+reduction, data-saving preferences, unsupported playback, and failed downloads
+retain the poster with an explicit play/retry control. Visitors can pause motion.
+This brand film is illustrative, not evidence of a completed client commission.
+
+The separate WhatsApp button appears at the bottom-left, opposite the chatbot.
+WhatsApp is no longer an action inside the assistant; its quotation flow remains.
+
 The default commands run a standard Next.js application for Vercel. Optional `sites:*` commands preserve the existing Vinext/Cloudflare Worker deployment.
 
 ## Run locally
@@ -88,7 +104,8 @@ contact information, and gives consent before any submission. Drafts expire afte
 Chat text is copied only when the visitor explicitly selects **Use my messages**.
 
 WhatsApp links use the owner-confirmed `+92-332-2249951` number configured in
-`data/company.ts`. They open a generic project message; the visitor sends it.
+`data/company.ts`. The fixed left-side button and contact links open a generic
+project message; the visitor sends it. The chatbot stays on the right.
 
 ## Approved company evidence
 

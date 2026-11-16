@@ -30,7 +30,7 @@ export default function SiteFooter() {
             <BrandLogo />
           </Link>
           <p>
-            Visionary architecture. Intelligent engineering.
+            Considered construction. Intelligent engineering.
             <br />
             Exceptional spaces, thoughtfully delivered.
           </p>
@@ -44,11 +44,11 @@ export default function SiteFooter() {
         </div>
         <div>
           <span className="section-label">EXPERTISE</span>
-          <Link href="/services/architecture-engineering">
-            Architecture & engineering
-          </Link>
           <Link href="/services/residential-commercial-construction">
             Residential & commercial
+          </Link>
+          <Link href="/services/architecture-engineering">
+            Architecture & engineering
           </Link>
           <Link href="/services/interior-design">Bespoke interiors</Link>
           <Link href="/services/turnkey-renovation">Turnkey & renovation</Link>
