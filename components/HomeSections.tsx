@@ -40,27 +40,27 @@ function About() {
         <div className="about-outline" />
         <img
           className="about-main"
-          src="/images/about.webp"
-          alt="Illustrative contemporary residence framed by natural surroundings"
+          src="/images/pakistan-bungalow-lahore.webp"
+          alt="Modern bungalow facade in Lahore, Pakistan — residential design reference"
           loading="lazy"
-          width="1000"
-          height="1200"
+          width="1600"
+          height="1400"
         />
         <div className="about-detail">
           <img
-            src="/images/detail-01.webp"
-            alt="Warm material palette and refined interior detailing — visual reference"
+            src="/images/pakistan-interior-islamabad.webp"
+            alt="Contemporary interior in Islamabad, Pakistan — a separate interior design reference"
             loading="lazy"
-            width="600"
-            height="700"
+            width="1400"
+            height="934"
           />
-          <span>A CONSIDERED APPROACH. EVERY DETAIL.</span>
+          <span>ISLAMABAD / INTERIOR REFERENCE</span>
         </div>
         <span className="image-coordinate">
-          FIG. 01 — THE LANGUAGE OF SPACE
+          FIG. 01 — PAKISTANI RESIDENTIAL REFERENCES
         </span>
         <span className="vertical-annotation">
-          ARCHITECTURE IS A WAY OF SEEING.
+          BUILT FOR THE WAY WE LIVE.
         </span>
       </div>
     </section>

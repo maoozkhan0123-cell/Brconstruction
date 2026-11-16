@@ -13,10 +13,10 @@ export default function About() {
     <main id="main-content">
       <section className="detail-hero">
         <img
-          src="/images/about.webp"
-          alt="Contemporary residence — illustrative architectural reference"
+          src="/images/pakistan-bungalow-lahore.webp"
+          alt="Modern bungalow facade in Lahore, Pakistan — residential design reference"
           width="1600"
-          height="1200"
+          height="1400"
         />
         <div className="detail-hero-overlay" />
         <div className="detail-hero-content">

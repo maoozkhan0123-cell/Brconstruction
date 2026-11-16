@@ -96,7 +96,7 @@ export const processStages: ConstructionStage[] = [
     subtitle: "Review the final details",
     description:
       "Walk through the completed scope, review finishing details, and coordinate the agreed inspections and handover documentation.",
-    image: "/images/about.webp",
+    image: "/images/pakistan-bungalow-lahore.webp",
     icon: "handover",
   },
 ];

@@ -1,14 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "@/components/Link";
-import { projects } from "@/data/projects";
+import { projects, projectCategories } from "@/data/projects";
 import { Arrow } from "./Icons";
 const categories = [
   "All Projects",
-  "Architecture",
-  "Interior Design",
-  "Construction",
-  "Commercial",
+  ...projectCategories.filter((category) =>
+    projects.some((project) => project.category === category),
+  ),
 ];
 export default function ProjectExplorer({
   expanded = false,
@@ -72,7 +71,7 @@ export default function ProjectExplorer({
             <div className="project-image">
               <img
                 src={project.image}
-                alt={`${project.title} — illustrative ${project.category.toLowerCase()} concept`}
+                alt={project.gallery[0].alt}
                 loading="lazy"
                 width="1200"
                 height="1000"

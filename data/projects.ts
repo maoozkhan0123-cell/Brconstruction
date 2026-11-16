@@ -142,39 +142,40 @@ export const projects: Project[] = [
     ],
   },
   {
+    // Retain the existing public URL when changing this collection entry.
     slug: "meridian-workplace",
-    title: "The Meridian Workplace",
-    category: "Commercial",
-    image: "/images/project-04.webp",
+    title: "The Lahore Bungalow",
+    category: "Construction",
+    image: "/images/pakistan-bungalow-lahore.webp",
     description:
-      "An architectural proposition for a more thoughtful working environment.",
+      "A real Lahore home as a reference for contemporary residential construction in Pakistan.",
     service: "residential-commercial-construction",
     location: "Illustrative concept",
     year: "Concept",
     overview:
-      "A commercial design reference considering how clear circulation, natural light, and durable finishes can support an adaptable workplace. This is an illustrative concept and has no associated client or verified site.",
+      "A residential design study using a real house photographed in Lahore, Pakistan. Its facade, entrance, and relationship to the street offer a local reference for a contemporary bungalow. The accompanying Islamabad interior is a separate design reference; neither photograph depicts a verified BR Construction commission.",
     objectives:
-      "Consider a workplace that accommodates collaboration and concentration, with an arrival experience that communicates purpose without visual excess.",
+      "Explore a family home with a considered arrival, everyday privacy, and a balance of natural light and sheltered living spaces. Use local residential references to start a conversation about the owner's needs.",
     challenge:
-      "The study considers adaptability, acoustic separation, service coordination, and the balance between shared areas and focused work settings.",
+      "Consider how the facade, boundary wall, openings, and entrance work together. A commissioned design would need to respond to its actual plot, orientation, climate, and structural requirements.",
     methodology:
-      "A real delivery programme would combine a workplace brief with occupancy requirements, relevant regulations, coordinated building services, specification review, and staged quality inspections.",
+      "A residential commission would begin with the brief and site assessment, followed by coordinated drawings, structural design, material choices, construction sequencing, and finishing reviews.",
     materials: [
-      "Architectural glazing",
-      "Durable mineral finishes",
-      "Acoustic surfaces",
-      "Metal detailing",
+      "Facade cladding references",
+      "Vertical surface detailing",
+      "Large glazed openings",
+      "Metal entrance and boundary details",
     ],
     outcome:
-      "A starting point for a commercial conversation. Occupancy, statutory approvals, energy performance, programme, and costs would require site-specific professional assessment.",
+      "A Pakistan-based visual starting point for a residential brief. The photographs are sourced design references, not evidence of BR Construction's completed work, and do not establish the pictured property's specifications, cost, or performance.",
     gallery: [
       {
-        src: "/images/project-04.webp",
-        alt: "Commercial architectural reference with considered proportions and glazing",
+        src: "/images/pakistan-bungalow-lahore.webp",
+        alt: "Real modern bungalow facade and entrance in Lahore, Pakistan — residential design reference",
       },
       {
-        src: "/images/detail-04.webp",
-        alt: "Workplace design inspiration for light, materials, and shared space",
+        src: "/images/pakistan-interior-islamabad.webp",
+        alt: "Living room photographed in Islamabad, Pakistan — a separate interior design reference",
       },
     ],
   },
