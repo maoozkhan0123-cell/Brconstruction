@@ -1,7 +1,5 @@
 import {
   Building2,
-  Calculator,
-  ClipboardList,
   DraftingCompass,
   Hammer,
   HardHat,
@@ -9,6 +7,7 @@ import {
   Paintbrush,
   PanelsTopLeft,
   Plus,
+  type LucideProps,
 } from "lucide-react";
 import Link from "@/components/Link";
 import { Arrow } from "@/components/Icons";
@@ -27,9 +26,51 @@ const serviceIcons = {
   finishes: Paintbrush,
 };
 
+function BlueprintIcon({ size = 40, strokeWidth = 1.6, ...props }: LucideProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <rect x="12" y="10" width="27" height="30" rx="1" />
+      <path d="M12 26h15v14M27 10v10h12M27 26h12M19 26v-7a7 7 0 0 1 7 7M16 14h6M31 14h4M16 35h6" />
+      <path d="M12 5h27M12 3v4M39 3v4M6 10v30M4 10h4M4 40h4M12 44h27M12 42v4M39 42v4" />
+    </svg>
+  );
+}
+
+function BudgetIcon({ size = 40, strokeWidth = 1.6, ...props }: LucideProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <rect x="8" y="7" width="27" height="35" rx="3" />
+      <rect x="13" y="12" width="16" height="7" rx="1" />
+      <path d="M14 26h2M22 26h2M14 34h2M22 34h2M29 25v10M26 30h6" />
+      <circle cx="36" cy="13" r="9" fill="#c8af7c" />
+      <path d="M36 7v12M39 9h-4a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-4" />
+    </svg>
+  );
+}
+
 const stageIcons = {
-  plan: ClipboardList,
-  budget: Calculator,
+  plan: BlueprintIcon,
+  budget: BudgetIcon,
   build: HardHat,
   handover: KeyRound,
 };
@@ -99,11 +140,10 @@ export function ConstructionProcess() {
       aria-labelledby="construction-process-heading"
     >
       <div className="construction-process-intro">
-        <p className="section-label"><i aria-hidden="true" />Our construction process</p>
+        <p className="section-label">OUR 4-STEP PROCESS</p>
         <h2 id="construction-process-heading">
-          A clear path.<br className="construction-mobile-break" /> <em>From plan to handover.</em>
+          HOW OUR CONSTRUCTION PROCESS WORKS IN KARACHI
         </h2>
-        <p>Four connected stages, with the scope and next steps considered along the way.</p>
       </div>
 
       <ol className="construction-process-grid">
@@ -111,12 +151,13 @@ export function ConstructionProcess() {
           const Icon = stageIcons[stage.icon];
           return (
             <li className="construction-process-card" key={stage.title}>
-              <div className="construction-process-visual">
-                <img src={stage.image} alt="" width={1200} height={800} loading="lazy" decoding="async" />
-                <span className="construction-process-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <span className="construction-process-icon"><Icon size={24} strokeWidth={1.4} aria-hidden="true" /></span>
-                <h3>{stage.title}</h3>
-              </div>
+              <span className="construction-process-icon" aria-hidden="true">
+                <Icon size={40} strokeWidth={1.6} aria-hidden="true" />
+              </span>
+              <h3 className="construction-process-title">
+                <span className="construction-process-number">{String(index + 1).padStart(2, "0")}</span>{" "}
+                {stage.title}
+              </h3>
               <div className="construction-process-copy">
                 <h4>{stage.subtitle}</h4>
                 <p>{stage.description}</p>

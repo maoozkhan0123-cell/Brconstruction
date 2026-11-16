@@ -11,7 +11,6 @@
 }
 
 .construction-section-intro h2,
-.construction-process-intro h2,
 .construction-faq-intro h2 {
   margin-top: 18px;
   font: 400 clamp(40px, 4.5vw, 68px) / 1.04 var(--serif);
@@ -123,122 +122,110 @@
 }
 
 .construction-process {
-  background: var(--ivory);
-  color: var(--black);
+  --process-navy: #183247;
+  --process-rule: rgba(24, 50, 71, 0.14);
+  background: #f4f5f5;
+  color: var(--process-navy);
   color-scheme: light;
 }
 
 .construction-process-intro {
-  max-width: 950px;
-  margin: 0 auto 48px;
+  max-width: 1100px;
+  margin: 0 auto 62px;
   text-align: center;
 }
 
 .construction-process .section-label {
-  color: #806333;
+  display: block;
+  color: var(--process-navy);
+  font: 500 12px / 1.5 var(--sans);
+  letter-spacing: 2.6px;
 }
 
-.construction-process-intro h2 em {
-  color: #806333;
-}
-
-.construction-process-intro > p:last-child {
-  margin-top: 23px;
-  color: #5b5d60;
-}
-
-.construction-mobile-break {
-  display: none;
+.construction-process-intro h2 {
+  max-width: 1060px;
+  margin: 20px auto 0;
+  color: var(--process-navy);
+  font: 600 clamp(28px, 2.8vw, 42px) / 1.3 var(--sans);
+  letter-spacing: -0.7px;
+  text-transform: uppercase;
 }
 
 .construction-process-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .construction-process-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-width: 0;
-  background: #faf9f5;
-  border: 1px solid rgba(13, 14, 17, 0.12);
+  padding: 0 clamp(18px, 2.1vw, 34px);
+  text-align: center;
 }
 
-.construction-process-visual {
-  position: relative;
-  isolation: isolate;
-  height: clamp(190px, 18.5vw, 280px);
-  overflow: hidden;
-  background: var(--charcoal);
-  color: var(--white);
-}
-
-.construction-process-visual > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.5);
-}
-
-.construction-process-visual::after {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  content: "";
-  background: linear-gradient(180deg, rgba(13, 14, 17, 0.36), rgba(13, 14, 17, 0.12) 35%, rgba(13, 14, 17, 0.88));
-}
-
-.construction-process-number,
-.construction-process-icon,
-.construction-process-visual h3 {
-  position: absolute;
-  z-index: 1;
-}
-
-.construction-process-number {
-  top: 23px;
-  left: 24px;
-  font-size: 11px;
-  letter-spacing: 1.5px;
+.construction-process-card + .construction-process-card {
+  border-left: 1px solid var(--process-rule);
 }
 
 .construction-process-icon {
-  top: 19px;
-  right: 20px;
   display: grid;
   place-items: center;
-  width: 39px;
-  height: 39px;
-  color: #efd5a2;
-  background: rgba(13, 14, 17, 0.6);
-  border: 1px solid rgba(239, 213, 162, 0.45);
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #c8af7c;
+  color: var(--process-navy);
 }
 
-.construction-process-visual h3 {
-  bottom: 23px;
-  left: 24px;
-  margin: 0;
-  font: 400 clamp(38px, 3.3vw, 50px) / 1 var(--serif);
-  letter-spacing: -0.8px;
+.construction-process-icon > svg {
+  width: 40px;
+  height: 40px;
+}
+
+.construction-process-card:nth-child(3) .construction-process-icon > svg {
+  fill: #f2cb62;
+}
+
+.construction-process-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px 0 18px;
+  color: var(--process-navy);
+  font: 600 22px / 1.35 var(--sans);
+  letter-spacing: -0.4px;
+}
+
+.construction-process-number {
+  color: #876a32;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .construction-process-copy {
-  padding: 26px 24px 29px;
+  max-width: 280px;
 }
 
 .construction-process-copy h4 {
-  margin-bottom: 13px;
-  font-size: 12px;
+  margin-bottom: 11px;
+  color: var(--process-navy);
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.6;
 }
 
 .construction-process-copy > p {
-  color: #5b5d60;
-  font-size: 12px;
-  line-height: 1.85;
+  color: #53616c;
+  font-size: 14px;
+  line-height: 1.8;
 }
 
 .construction-process-footer {
@@ -246,16 +233,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 36px;
+  margin-top: 50px;
+  padding-top: 27px;
+  border-top: 1px solid var(--process-rule);
 }
 
 .construction-process-footer > p {
-  color: #5b5d60;
+  color: #53616c;
   font-size: 12px;
 }
 
 .construction-process-footer .text-link {
-  color: #70541e;
+  color: var(--process-navy);
 }
 
 .construction-faqs {
@@ -348,14 +337,15 @@
 
   .construction-process-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 50px;
   }
 
-  .construction-process-visual {
-    height: 235px;
+  .construction-process-card:nth-child(odd) {
+    border-left: 0;
   }
 
   .construction-process-copy {
-    padding: 27px;
+    max-width: 320px;
   }
 }
 
@@ -392,27 +382,12 @@
   }
 
   .construction-process-intro {
-    margin-bottom: 32px;
+    margin-bottom: 46px;
   }
 
-  .construction-process-intro > p:last-child {
-    max-width: 400px;
-    margin-right: auto;
-    margin-left: auto;
-    font-size: 13px;
-  }
-
-  .construction-process-visual {
-    height: 205px;
-  }
-
-  .construction-process-copy {
-    padding: 23px;
-  }
-
-  .construction-process-number,
-  .construction-process-visual h3 {
-    left: 23px;
+  .construction-process-card {
+    padding-right: 20px;
+    padding-left: 20px;
   }
 
   .construction-process-footer {
@@ -433,14 +408,12 @@
   }
 
   .construction-section-intro h2,
-  .construction-process-intro h2,
   .construction-faq-intro h2 {
     font-size: clamp(35px, 10vw, 47px);
     letter-spacing: -0.9px;
   }
 
-  .construction-service-grid,
-  .construction-process-grid {
+  .construction-service-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
@@ -458,24 +431,34 @@
     font-size: 10px;
   }
 
-  .construction-process-visual {
-    height: 215px;
+  .construction-process-intro h2 {
+    font-size: 27px;
+    letter-spacing: -0.4px;
   }
 
-  .construction-process-visual h3 {
-    font-size: 45px;
+  .construction-process-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .construction-process-card {
+    padding: 0;
+  }
+
+  .construction-process-card + .construction-process-card {
+    padding-top: 34px;
+    border-top: 1px solid var(--process-rule);
+    border-left: 0;
   }
 
   .construction-process-copy {
-    padding: 24px 25px 27px;
+    max-width: 340px;
   }
 
-  .construction-process-copy > p {
-    font-size: 13px;
-  }
-
-  .construction-mobile-break {
-    display: block;
+  .construction-process-footer {
+    justify-content: center;
+    margin-top: 38px;
+    text-align: center;
   }
 
   .construction-faq > summary {
