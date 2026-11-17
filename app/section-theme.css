@@ -1,0 +1,151 @@
+/*
+ * Homepage colour rhythm: white → cream → black, repeating.
+ * About (white) · Services (cream) · Projects (black) · Philosophy (white)
+ * Process (cream) · Commitment (black) · FAQs (white) · Contact (cream) · Footer (black)
+ */
+
+:root {
+  --cream: #efe8da;
+}
+
+/* ---- About: white ---- */
+.about-section {
+  background: #fff;
+}
+
+.about-pillars li {
+  background: #faf8f3;
+}
+
+/* ---- Services: cream ---- */
+.construction-services {
+  background: var(--cream);
+}
+
+/* ---- Projects: black ---- */
+.portfolio-section {
+  background: var(--black);
+  color: var(--white);
+  color-scheme: dark;
+}
+
+.portfolio-section .display-heading em {
+  color: var(--gold);
+}
+
+.portfolio-section .pf-filters button {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e3e1da;
+}
+
+.portfolio-section .pf-filters button span {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--bright-gold);
+}
+
+.portfolio-section .pf-filters button.is-selected {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #16181d;
+}
+
+.portfolio-section .pf-filters button.is-selected span {
+  background: #16181d;
+  color: var(--bright-gold);
+}
+
+.portfolio-section .pf-card {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Contact: cream (the form keeps its dark card) ---- */
+.contact-section {
+  background: var(--cream);
+  color: #1b1c1e;
+  color-scheme: light;
+}
+
+.contact-section .contact-intro .section-label {
+  color: #856a36;
+}
+
+.contact-section .contact-intro .display-heading em {
+  color: #9a7a40;
+}
+
+.contact-section .contact-intro > p {
+  color: #5f5d55;
+}
+
+.contact-section .contact-details {
+  border-top-color: rgba(27, 28, 30, 0.14);
+}
+
+.contact-section .contact-detail-label {
+  color: #856a36;
+}
+
+.contact-section .contact-detail > a:not(.contact-map-link),
+.contact-section .contact-phone-links > a,
+.contact-section .contact-detail address {
+  color: #2a2b2d;
+}
+
+.contact-section .contact-details .contact-phone-links > a.contact-whatsapp,
+.contact-section .contact-map-link {
+  color: #7d6232;
+}
+
+/* Tighter layout: less padding, smaller heading, form aligned to the top. */
+.contact-section.section-pad:not(.standalone-contact) {
+  padding-top: 64px;
+  padding-bottom: 72px;
+}
+
+.contact-section {
+  gap: 6%;
+  align-items: start;
+}
+
+.contact-section .contact-intro > .display-heading {
+  margin: 0 0 18px;
+  font-size: clamp(42px, 4vw, 64px);
+}
+
+.contact-section .contact-intro > p {
+  font-size: 14px;
+}
+
+.contact-section .contact-details {
+  margin-top: 22px;
+  padding-top: 20px;
+}
+
+.contact-section .contact-image {
+  height: 170px;
+  margin-top: 26px;
+  border-radius: 14px;
+}
+
+.contact-section .form-heading {
+  margin-bottom: 18px;
+}
+
+.contact-section .form-grid {
+  gap: 10px 20px;
+}
+
+.contact-section .inquiry-form {
+  align-self: start;
+  padding: 26px 28px;
+  border-radius: 18px;
+  color: var(--white);
+  color-scheme: dark;
+  box-shadow: 0 30px 60px -30px rgba(40, 30, 15, 0.55);
+}
+
+/* ---- Footer: black ---- */
+.site-footer {
+  background: var(--black);
+}

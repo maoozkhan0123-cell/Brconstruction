@@ -62,7 +62,7 @@ function wasPlaybackInterrupted(error: unknown) {
   return error instanceof DOMException && error.name === "AbortError";
 }
 
-/** Decorative, silent footage with an explicit alternative to automatic motion. */
+/** Decorative, silent background footage. The poster image shows when motion is not played. */
 export default function CinematicVideo({
   source,
   poster = LOCAL_POSTER,
@@ -81,7 +81,6 @@ export default function CinematicVideo({
   const [intent, setIntent] = useState<"automatic" | "play" | "pause">(
     "automatic",
   );
-  const [playing, setPlaying] = useState(false);
   const [hasFrame, setHasFrame] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -113,34 +112,6 @@ export default function CinematicVideo({
     };
   }, [film, shouldPlay]);
 
-  function togglePlayback() {
-    const element = video.current;
-    if (!element) return;
-    if (playing) {
-      setIntent("pause");
-      element.pause();
-      return;
-    }
-
-    // Start within the click event for browsers that require a user gesture.
-    // The source stays unloaded on reduced-motion and data-saving visits.
-    if (failed || element.getAttribute("src") !== film) {
-      element.src = film;
-      element.load();
-    }
-    element.muted = true;
-    setFailed(false);
-    setIntent("play");
-    void element.play().catch((error: unknown) => {
-      if (!wasPlaybackInterrupted(error)) {
-        setBlocked(true);
-        setIntent("pause");
-      }
-    });
-  }
-
-  const action = failed ? "Retry" : playing ? "Pause" : "Play";
-
   return (
     <>
       <video
@@ -157,40 +128,11 @@ export default function CinematicVideo({
         disableRemotePlayback
         aria-hidden="true"
         tabIndex={-1}
-        onPlaying={() => {
-          setPlaying(true);
-          setHasFrame(true);
-        }}
-        onPause={() => setPlaying(false)}
-        onError={() => {
-          setFailed(true);
-          setPlaying(false);
-        }}
+        onPlaying={() => setHasFrame(true)}
+        onError={() => setFailed(true)}
       >
         Your browser can display the background photograph instead of the film.
       </video>
-      <button
-        type="button"
-        className="construction-hero__video-control"
-        onClick={togglePlayback}
-        aria-label={`${action} background video`}
-        aria-pressed={playing}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          aria-hidden="true"
-        >
-          {playing ? (
-            <path d="M9 5v14M15 5v14" />
-          ) : (
-            <path d="m9 5 10 7-10 7V5Z" />
-          )}
-        </svg>
-        <span>{action} film</span>
-      </button>
     </>
   );
 }

@@ -177,7 +177,8 @@ section[id] {
   align-items: center;
   gap: 30px;
   min-height: 54px;
-  padding: 16px 25px;
+  padding: 16px 28px;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.4px;
@@ -272,53 +273,35 @@ section[id] {
   gap: 11px;
   flex-shrink: 0;
 }
-.brand > .brand-mark {
-  position: relative;
+.brand-logo {
   display: block;
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  overflow: hidden;
-  border: 1px solid rgba(197, 160, 89, 0.55);
-  border-radius: 50%;
-  background: #f5efe3;
+  width: auto;
+  height: 50px;
+  max-width: none;
+  transition: transform 0.3s ease;
 }
-.brand-mark > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.brand:hover .brand-logo {
+  transform: scale(1.03);
 }
-.brand-copy {
-  display: block;
+.footer-logo .brand-logo {
+  height: 84px;
 }
-.brand strong {
-  display: block;
-  font-size: 15px;
-  line-height: 1.5;
-  letter-spacing: 1px;
-  font-weight: 600;
-  white-space: nowrap;
+@media (max-width: 1199px) {
+  .brand-logo {
+    height: 44px;
+  }
 }
-.brand strong span {
-  font-weight: 350;
-}
-.brand strong i {
-  font-size: 7px;
-  vertical-align: top;
-  font-style: normal;
-  margin-left: 3px;
-}
-.brand small {
-  display: block;
-  font-size: 6.2px;
-  line-height: 2;
-  letter-spacing: 1.65px;
-  color: #d0cec7;
+@media (max-width: 767px) {
+  .brand-logo {
+    height: 38px;
+  }
+  .footer-logo .brand-logo {
+    height: 70px;
+  }
 }
 .desktop-nav {
   display: flex;
-  gap: clamp(16px, 1.8vw, 30px);
+  gap: clamp(4px, 0.6vw, 10px);
   align-items: center;
 }
 .desktop-nav a {
@@ -326,28 +309,33 @@ section[id] {
   position: relative;
   color: #e0dfdc;
   white-space: nowrap;
-  padding: 10px 0;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
-.desktop-nav a:after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  width: 0;
-  height: 1px;
+.desktop-nav a.active {
+  border-color: rgba(197, 160, 89, 0.55);
+  color: var(--bright-gold);
+}
+.desktop-nav a:hover,
+.desktop-nav a:focus-visible {
   background: var(--gold);
-  transition: width 0.25s;
-}
-.desktop-nav a:hover:after,
-.desktop-nav a.active:after {
-  width: 100%;
+  border-color: var(--gold);
+  color: var(--black);
+  box-shadow: 0 6px 18px -8px rgba(197, 160, 89, 0.7);
 }
 .header-cta {
   display: flex;
   align-items: center;
   gap: 23px;
   border: 1px solid #c5a05977;
-  padding: 12px 18px;
+  border-radius: 999px;
+  padding: 12px 22px;
   font-size: 10px;
   white-space: nowrap;
 }
@@ -671,33 +659,6 @@ section[id] {
   letter-spacing: 2px;
   color: #aaa9a1;
 }
-.discipline-strip {
-  padding: 27px var(--gutter);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-.discipline-strip > span {
-  font-size: 7px;
-  letter-spacing: 1.5px;
-  color: #96978e;
-}
-.discipline-strip > div {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-.discipline-strip > div span {
-  font-family: var(--serif);
-  font-size: 23px;
-  color: #deddd7;
-}
-.discipline-strip i {
-  font: 300 13px var(--sans);
-  color: var(--gold);
-}
 .about-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -727,62 +688,6 @@ section[id] {
 }
 .about-text .text-link {
   margin-top: 28px;
-}
-.about-composition {
-  height: 550px;
-  position: relative;
-  margin-right: 25px;
-  margin-bottom: 25px;
-}
-.about-main {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 86%;
-  height: 88%;
-  object-fit: cover;
-}
-.about-outline {
-  position: absolute;
-  inset: -18px -18px 25px 60px;
-  border: 1px solid #b69b6855;
-}
-.about-detail {
-  position: absolute;
-  left: -38px;
-  bottom: -8px;
-  width: 50%;
-  border: 8px solid var(--ivory);
-  background: var(--ivory);
-}
-.about-detail img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-}
-.about-detail span {
-  display: block;
-  font-size: 6px;
-  letter-spacing: 1px;
-  color: #6f6f65;
-  padding-top: 9px;
-}
-.image-coordinate {
-  position: absolute;
-  right: 0;
-  bottom: 24px;
-  font-size: 7px;
-  letter-spacing: 1.5px;
-  color: #746b58;
-}
-.vertical-annotation {
-  position: absolute;
-  top: 0;
-  right: -40px;
-  writing-mode: vertical-rl;
-  font-size: 7px;
-  letter-spacing: 2px;
-  color: #8c867b;
 }
 .section-intro {
   display: flex;
@@ -1118,75 +1023,6 @@ section[id] {
 .portfolio-bottom .text-link {
   white-space: nowrap;
 }
-.philosophy-section {
-  position: relative;
-  min-height: 730px;
-  overflow: hidden;
-}
-.philosophy-section > img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  inset: 0;
-  object-fit: cover;
-  object-position: center 30%;
-  filter: grayscale(0.55);
-}
-.philosophy-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, #0a0e12e8, #0a0e1290 55%, #0a0e1240),
-    linear-gradient(0deg, #0c0e13df, transparent 70%);
-}
-.philosophy-inner {
-  position: relative;
-  padding: 100px var(--gutter) 80px;
-  max-width: 1700px;
-  margin: auto;
-}
-.philosophy-inner > .section-label {
-  color: #dfc897;
-}
-.philosophy-inner > .display-heading {
-  margin: 30px 0 25px;
-  font-size: clamp(55px, 6vw, 100px);
-}
-.philosophy-inner > p {
-  font-size: 12px;
-  line-height: 1.9;
-  color: #d2d0c9;
-}
-.principles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-top: 75px;
-  border-top: 1px solid #ffffff40;
-  padding-top: 24px;
-}
-.principles > div {
-  position: relative;
-  padding-left: 36px;
-  max-width: 330px;
-}
-.principles > div > span {
-  position: absolute;
-  left: 0;
-  top: 2px;
-  font: 18px var(--serif);
-  color: var(--gold);
-}
-.principles h3 {
-  font-family: var(--serif);
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-.principles p {
-  font-size: 10px;
-  color: #b6b8b6;
-  line-height: 1.9;
-}
 .process-section {
   background: #111316;
 }
@@ -1320,67 +1156,6 @@ section[id] {
 }
 .process-timeline button.reached .section-label {
   color: var(--gold);
-}
-.commitment-section {
-  padding-top: 80px;
-  padding-bottom: 40px;
-}
-.commitment-content {
-  max-width: 810px;
-  text-align: center;
-  margin: 35px auto 65px;
-  min-height: 275px;
-}
-.quote-mark {
-  display: block;
-  font: 100px/0.75 var(--serif);
-  color: #9a7c43;
-}
-.commitment-content h2 {
-  font: clamp(36px, 4.5vw, 66px) / 1.15 var(--serif);
-  letter-spacing: -1px;
-  margin: 5px 0 20px;
-}
-.commitment-content p {
-  font-size: 15px;
-  line-height: 1.8;
-  max-width: 650px;
-  margin: 0 auto 30px;
-  color: #66685f;
-}
-.commitment-content .section-label {
-  font-size: 8px;
-}
-.commitment-bottom {
-  border-top: 1px solid #0002;
-  padding-top: 23px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-}
-.commitment-bottom > span {
-  font-size: 7px;
-  letter-spacing: 1.5px;
-  color: #77776c;
-}
-.commitment-bottom > div {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-}
-.commitment-bottom > div > span {
-  font-size: 8px;
-  letter-spacing: 1.5px;
-}
-.commitment-bottom .icon-button {
-  height: 34px;
-  width: 34px;
-  border-color: #0003;
-}
-.commitment-bottom .icon-button svg {
-  width: 13px;
-  height: 13px;
 }
 .contact-section {
   display: grid;
@@ -1622,45 +1397,6 @@ section[id] {
   padding: 75px var(--gutter) 24px;
   border-top: 1px solid var(--border);
 }
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 65px;
-  border-bottom: 1px solid var(--border);
-}
-.footer-top h2 {
-  font: clamp(44px, 5vw, 75px) / 1.05 var(--serif);
-  letter-spacing: -1.5px;
-  margin-top: 23px;
-}
-.footer-top h2 em {
-  color: var(--gold);
-}
-.footer-top .section-label {
-  font-size: 8px;
-}
-.circle-link {
-  display: grid;
-  place-items: center;
-  width: 90px;
-  height: 90px;
-  border: 1px solid #c5a05999;
-  border-radius: 50%;
-  color: var(--gold);
-  margin-right: 40px;
-  transition:
-    background 0.3s,
-    color 0.3s;
-}
-.circle-link:hover {
-  background: var(--gold);
-  color: var(--black);
-}
-.circle-link svg {
-  width: 35px;
-  height: 35px;
-}
 .footer-grid {
   display: grid;
   grid-template-columns: 1.3fr 0.8fr 1fr 1.15fr;
@@ -1673,24 +1409,7 @@ section[id] {
   gap: 12px;
   margin: 0 0 20px -4px;
 }
-.footer-logo > .brand-mark {
-  width: 64px;
-  height: 64px;
-}
-.footer-logo strong {
-  font-size: 12px;
-  letter-spacing: 0.7px;
-}
-.footer-logo small {
-  font-size: 5px;
-  letter-spacing: 1px;
-}
 .footer-brand p,
-.footer-note {
-  font-size: 9px;
-  color: #a2a4a3;
-  line-height: 1.9;
-}
 .footer-grid > div > .section-label {
   font-size: 8px;
   margin-bottom: 18px;
@@ -1720,25 +1439,6 @@ section[id] {
   white-space: nowrap;
   margin-left: -5px;
   padding: 5px 0 30px;
-}
-.footer-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  font-size: 7px;
-  color: #92958d;
-  letter-spacing: 0.2px;
-}
-.footer-bottom > div {
-  display: flex;
-  gap: 20px;
-}
-.footer-bottom > span:last-child {
-  font-size: 6px;
-  letter-spacing: 1.3px;
 }
 .collection-page {
   padding-top: 180px;
@@ -2174,12 +1874,6 @@ section[id] {
   .about-section {
     gap: 15%;
   }
-  .about-composition {
-    height: 640px;
-  }
-  .about-detail img {
-    height: 300px;
-  }
   .expertise-cards {
     height: 540px;
   }
@@ -2201,21 +1895,11 @@ section[id] {
 }
 @media (max-width: 1199px) {
   .desktop-nav {
-    gap: 17px;
+    gap: 2px;
   }
   .desktop-nav a {
     font-size: 9px;
-  }
-  .brand strong {
-    font-size: 13px;
-  }
-  .brand > .brand-mark {
-    width: 44px;
-    height: 44px;
-  }
-  .brand small {
-    font-size: 5.5px;
-    letter-spacing: 1.3px;
+    padding: 8px 12px;
   }
   .header-cta {
     padding: 11px 13px;
@@ -2237,25 +1921,10 @@ section[id] {
   .hero-content {
     padding-top: 180px;
   }
-  .discipline-strip > span {
-    display: none;
-  }
-  .discipline-strip {
-    justify-content: center;
-  }
   .about-section {
     gap: 8%;
     padding-top: 110px;
     padding-bottom: 110px;
-  }
-  .about-composition {
-    height: 480px;
-  }
-  .about-detail {
-    left: -20px;
-  }
-  .about-detail img {
-    height: 210px;
   }
   .expertise-title {
     font-size: 24px;
@@ -2291,9 +1960,6 @@ section[id] {
   }
   .process-description {
     padding: 40px 30px;
-  }
-  .footer-bottom > span:last-child {
-    display: none;
   }
   .hero-project {
     margin-right: 0;
@@ -2334,12 +2000,6 @@ section[id] {
   }
   .about-section {
     gap: 7%;
-  }
-  .about-composition {
-    height: 440px;
-  }
-  .about-detail img {
-    height: 180px;
   }
   .display-heading {
     font-size: 59px;
@@ -2478,9 +2138,6 @@ section[id] {
   .footer-grid > div:last-child {
     display: none;
   }
-  .footer-top h2 {
-    font-size: 65px;
-  }
   .collection-page,
   .standalone-contact {
     padding-top: 160px;
@@ -2522,18 +2179,6 @@ section[id] {
   .site-header.is-scrolled {
     height: 78px;
     padding: 17px 24px;
-  }
-  .brand > .brand-mark {
-    height: 38px;
-    width: 38px;
-  }
-  .brand strong {
-    font-size: 12px;
-    letter-spacing: 0.6px;
-  }
-  .brand small {
-    font-size: 5px;
-    letter-spacing: 1.1px;
   }
   .brand {
     gap: 8px;
@@ -2648,20 +2293,6 @@ section[id] {
   .hero-side-note {
     display: none;
   }
-  .discipline-strip {
-    padding: 23px 24px;
-  }
-  .discipline-strip > div {
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .discipline-strip > div span {
-    font-size: 19px;
-  }
-  .discipline-strip i {
-    font-size: 10px;
-  }
   .display-heading {
     font-size: clamp(46px, 10.7vw, 62px);
     letter-spacing: -1.7px;
@@ -2693,42 +2324,6 @@ section[id] {
   .about-text > p:not(.large-copy) {
     font-size: 12px;
     max-width: 420px;
-  }
-  .about-composition {
-    margin-right: 12px;
-    margin-left: 12px;
-    height: 480px;
-    margin-bottom: 0;
-  }
-  .about-main {
-    width: 88%;
-    height: 90%;
-  }
-  .about-outline {
-    inset: -14px -14px 32px 35px;
-  }
-  .about-detail {
-    left: -18px;
-    width: 52%;
-    bottom: 0;
-    border-width: 6px;
-  }
-  .about-detail img {
-    height: 200px;
-  }
-  .image-coordinate {
-    font-size: 5.5px;
-    bottom: 18px;
-    max-width: 140px;
-    letter-spacing: 1px;
-  }
-  .vertical-annotation {
-    right: -29px;
-    font-size: 6px;
-    letter-spacing: 1.3px;
-  }
-  .about-detail span {
-    font-size: 5px;
   }
   .section-intro {
     display: block;
@@ -2884,46 +2479,6 @@ section[id] {
   .portfolio-bottom .text-link {
     font-size: 11px;
   }
-  .philosophy-section {
-    min-height: 900px;
-  }
-  .philosophy-section > img {
-    object-position: 65% center;
-  }
-  .philosophy-inner {
-    padding: 75px 24px 65px;
-  }
-  .philosophy-shade {
-    background:
-      linear-gradient(90deg, #0a0e12dc, #0a0e12a0),
-      linear-gradient(0deg, #0c0e13e0, transparent);
-  }
-  .philosophy-inner > .display-heading {
-    font-size: 57px;
-    letter-spacing: -1.5px;
-    margin: 25px 0;
-  }
-  .philosophy-inner > p {
-    font-size: 12px;
-  }
-  .principles {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    margin-top: 45px;
-    padding-top: 27px;
-  }
-  .principles > div {
-    max-width: 100%;
-    padding-left: 38px;
-  }
-  .principles h3 {
-    font-size: 26px;
-    margin-bottom: 8px;
-  }
-  .principles p {
-    font-size: 11px;
-    max-width: 300px;
-  }
   .process-visual {
     grid-template-columns: 1fr;
   }
@@ -2986,40 +2541,6 @@ section[id] {
   }
   .process-timeline .section-label {
     font-size: 9px;
-  }
-  .commitment-section {
-    padding-top: 55px;
-    padding-bottom: 28px;
-  }
-  .commitment-content {
-    margin: 40px auto 45px;
-    min-height: 320px;
-  }
-  .quote-mark {
-    font-size: 90px;
-  }
-  .commitment-content h2 {
-    font-size: 43px;
-    margin-bottom: 20px;
-  }
-  .commitment-content p {
-    font-size: 13px;
-    line-height: 1.9;
-  }
-  .commitment-content .section-label {
-    font-size: 7px;
-  }
-  .commitment-bottom {
-    gap: 15px;
-    padding-top: 20px;
-  }
-  .commitment-bottom > span {
-    font-size: 6px;
-    letter-spacing: 1px;
-    max-width: 160px;
-  }
-  .commitment-bottom > div {
-    gap: 12px;
   }
   .contact-section {
     gap: 40px;
@@ -3090,31 +2611,6 @@ section[id] {
   .site-footer {
     padding: 60px 24px 24px;
   }
-  .footer-top {
-    padding-bottom: 40px;
-    gap: 15px;
-  }
-  .footer-top h2 {
-    font-size: 48px;
-    letter-spacing: -1px;
-  }
-  .footer-top > .section-label {
-    font-size: 6px;
-  }
-  .footer-top .section-label {
-    font-size: 6px;
-    letter-spacing: 1px;
-  }
-  .circle-link {
-    width: 55px;
-    height: 55px;
-    min-width: 55px;
-    margin-right: 0;
-  }
-  .circle-link svg {
-    height: 23px;
-    width: 23px;
-  }
   .footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 35px 20px;
@@ -3122,10 +2618,6 @@ section[id] {
   }
   .footer-brand {
     grid-column: 1/-1;
-  }
-  .footer-logo > .brand-mark {
-    width: 56px;
-    height: 56px;
   }
   .footer-brand p {
     font-size: 10px;
@@ -3143,15 +2635,6 @@ section[id] {
     font-size: 9.4vw;
     margin-left: -2px;
     padding: 5px 0 25px;
-  }
-  .footer-bottom {
-    align-items: start;
-    gap: 15px;
-    flex-direction: column;
-    font-size: 7px;
-  }
-  .footer-bottom > div {
-    gap: 20px;
   }
   .floating-consultation {
     bottom: 16px;
@@ -3337,18 +2820,6 @@ section[id] {
   .hero-content > p {
     font-size: 11px;
   }
-  .discipline-strip > div {
-    gap: 10px;
-  }
-  .discipline-strip > div span {
-    font-size: 17px;
-  }
-  .about-composition {
-    height: 400px;
-  }
-  .about-detail img {
-    height: 165px;
-  }
   .display-heading {
     font-size: 47px;
   }
@@ -3375,28 +2846,8 @@ section[id] {
   .field textarea {
     font-size: 12px;
   }
-  .footer-top h2 {
-    font-size: 42px;
-  }
-  .footer-top .section-label {
-    font-size: 5.5px;
-  }
-  .circle-link {
-    width: 46px;
-    height: 46px;
-    min-width: 46px;
-  }
   .project-caption h3 {
     font-size: 26px;
-  }
-  .philosophy-inner > .display-heading {
-    font-size: 50px;
-  }
-  .commitment-content h2 {
-    font-size: 39px;
-  }
-  .commitment-content p {
-    font-size: 12px;
   }
 }
 .detail-intro > div > p:not(.section-label) {
@@ -3494,12 +2945,6 @@ section[id] {
   .expertise-content ul {
     font-size: 11px;
   }
-  .philosophy-inner > p {
-    font-size: 14px;
-  }
-  .principles p {
-    font-size: 12px;
-  }
   .process-description p {
     font-size: 14px;
   }
@@ -3521,9 +2966,6 @@ section[id] {
     font-size: 8px;
   }
   .footer-brand p,
-  .footer-note {
-    font-size: 11px;
-  }
   .footer-grid > div > a:not(.text-link) {
     font-size: 11px;
   }
@@ -3638,5 +3080,4 @@ section[id] {
   }
 }
 .hero-heading-line { display: block; } .hero h1 em:after { content: none; }
-.field-error { min-height: 15px; } .contact-section > *, .form-grid > * { min-width: 0; }
-.footer-top > div { min-width: 0; flex: 1; } .footer-top .circle-link { flex-shrink: 0; } html, body { overflow-x: clip; }
+.field-error { min-height: 15px; } .contact-section > *, .form-grid > * { min-width: 0; } html, body { overflow-x: clip; }

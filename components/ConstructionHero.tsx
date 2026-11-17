@@ -25,9 +25,6 @@ export default function ConstructionHero() {
       <div className="construction-hero__shade" aria-hidden="true" />
 
       <div className="construction-hero__content">
-        <p className="construction-hero__eyebrow">
-          <span aria-hidden="true" /> CONSTRUCTION. ENGINEERING. ARCHITECTURE.
-        </p>
         <h1 id="construction-hero-title">
           <span className="construction-hero__primary">
             Constructing <em>Legacies.</em>

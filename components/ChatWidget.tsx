@@ -288,8 +288,6 @@ export default function ChatWidget() {
         onClick={() => { if (open) close(); else setOpen(true); }}
       >
         {open ? <X size={22} aria-hidden="true" /> : <BotImage />}
-        <span>{open ? "Close chat" : "Let’s talk"}</span>
-        {!open && <span className="br-chat-launcher-dot" aria-hidden="true" />}
       </button>
     </aside>
   );

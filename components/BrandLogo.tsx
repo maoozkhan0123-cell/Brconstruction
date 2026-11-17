@@ -1,21 +1,18 @@
-/** The supplied BR Construction artwork is optimized for repeated website use. */
+/**
+ * Official BR Construction logo, supplied by the company (transparent PNG).
+ * The full-resolution master is public/brand/br-construction-logo.png; the
+ * 600px WebP is a straight downscale for the web — the artwork is unchanged.
+ */
 export default function BrandLogo() {
   return (
-    <>
-      <span className="brand-mark" aria-hidden="true">
-        <img
-          src="/images/br-construction-logo.webp"
-          width={640}
-          height={640}
-          alt=""
-          decoding="async"
-          fetchPriority="low"
-        />
-      </span>
-      <span className="brand-copy">
-        <strong>BR<span>CONSTRUCTION</span></strong>
-        <small>CONSTRUCTION / DESIGN / ENGINEERING</small>
-      </span>
-    </>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      className="brand-logo"
+      src="/brand/br-construction-logo-600.webp"
+      width={600}
+      height={351}
+      alt="BR Construction"
+      decoding="async"
+    />
   );
 }

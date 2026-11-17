@@ -1,29 +1,11 @@
 import Link from "@/components/Link";
-import { Arrow } from "./Icons";
 import BrandLogo from "./BrandLogo";
+import { Arrow } from "./Icons";
+import { whatsappUrl } from "@/data/company";
 import ContactDetails from "./ContactDetails";
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div className="footer-top">
-        <div>
-          <span className="section-label">
-            A SHARED VISION. AN ENDURING LEGACY.
-          </span>
-          <h2>
-            Let’s build something
-            <br />
-            <em>that lasts.</em>
-          </h2>
-        </div>
-        <Link
-          className="circle-link"
-          href="/#contact"
-          aria-label="Start your project"
-        >
-          <Arrow diagonal />
-        </Link>
-      </div>
       <div className="footer-grid">
         <div className="footer-brand">
           <Link href="/" className="brand footer-logo" aria-label="BR Construction home">
@@ -34,6 +16,20 @@ export default function SiteFooter() {
             <br />
             Exceptional spaces, thoughtfully delivered.
           </p>
+          <div className="footer-actions">
+            <Link href="/#contact" className="button button-gold">
+              Start your project <Arrow diagonal />
+            </Link>
+            <a
+              className="button button-outline"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Message BR Construction on WhatsApp (opens in a new tab)"
+            >
+              WhatsApp <Arrow diagonal />
+            </a>
+          </div>
         </div>
         <div>
           <span className="section-label">EXPLORE</span>
@@ -58,22 +54,8 @@ export default function SiteFooter() {
           <ContactDetails compact />
         </div>
       </div>
-      <div className="footer-disclosure">
-        <p className="footer-note">Portfolio imagery represents illustrative concepts, not completed BR projects.</p>
-        <a href="/#home" className="text-link">Back to top <Arrow style={{ transform: "rotate(-90deg)" }} /></a>
-      </div>
       <div className="footer-wordmark" aria-hidden="true">
-        BRCONSTRUCTION
-      </div>
-      <div className="footer-bottom">
-        <span>
-          © {new Date().getFullYear()} BR Construction. All rights reserved.
-        </span>
-        <div>
-          <Link href="/privacy">Privacy policy</Link>
-          <Link href="/terms">Terms of use</Link>
-        </div>
-        <span>DESIGNED WITH PURPOSE. BUILT TO ENDURE.</span>
+        <span>BRCONSTRUCTION</span>
       </div>
     </footer>
   );

@@ -34,16 +34,18 @@ export default function ProjectExplorer({
   const visible = projects
     .filter((p) => filter === "All Projects" || p.category === filter)
     .slice(0, expanded ? 99 : 4);
+  const bento = !expanded && filter === "All Projects";
   return (
     <>
-      <div className="portfolio-toolbar">
-        <div className="project-filters" aria-label="Filter projects">
+      <div className="pf-toolbar">
+        <div className="pf-filters" aria-label="Filter projects">
           {categories.map((category) => (
             <button
               key={category}
+              type="button"
               onClick={() => change(category)}
               aria-pressed={filter === category}
-              className={filter === category ? "selected" : ""}
+              className={filter === category ? "is-selected" : ""}
             >
               {category}
               <span>
@@ -54,55 +56,36 @@ export default function ProjectExplorer({
             </button>
           ))}
         </div>
-        <span className="concept-tag">
-          <span /> ILLUSTRATIVE COLLECTION
-        </span>
       </div>
       <div
-        className={`project-grid ${filter !== "All Projects" ? "filtered" : ""}`}
+        className={`pf-grid${bento ? " pf-grid--bento" : ""}`}
         aria-live="polite"
       >
         {visible.map((project, index) => (
           <Link
             key={project.slug}
             href={`/projects/${project.slug}`}
-            className={`project-card project-card-${index + 1}`}
+            className={`pf-card pf-card--${index + 1} reveal`}
+            style={{ animationDelay: `${index * 90}ms` }}
           >
-            <div className="project-image">
-              <img
-                src={project.image}
-                alt={project.gallery[0].alt}
-                loading="lazy"
-                width="1200"
-                height="1000"
-              />
-              <span className="project-number">
-                0{projects.indexOf(project) + 1} / CONCEPT STUDY
-              </span>
-              <span className="project-open">
-                <Arrow diagonal />
-              </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.image}
+              alt={project.gallery[0].alt}
+              loading="lazy"
+              width="1200"
+              height="1000"
+            />
+            <div className="pf-card__caption">
+              <span className="pf-card__category">{project.category}</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
             </div>
-            <div className="project-caption">
-              <div>
-                <span className="section-label">{project.category}</span>
-                <h3>{project.title}</h3>
-              </div>
-              <Arrow diagonal />
-            </div>
+            <span className="pf-card__open">
+              View project <Arrow diagonal />
+            </span>
           </Link>
         ))}
-      </div>
-      <div className="portfolio-bottom">
-        <p>
-          Ideas in form. This collection presents design references
-          <br className="desktop-break" /> and illustrative concepts, rather
-          than completed BR work.
-        </p>
-        <Link href={expanded ? "/#contact" : "/projects"} className="text-link">
-          {expanded ? "Discuss your own vision" : "Explore the collection"}
-          <Arrow diagonal />
-        </Link>
       </div>
     </>
   );

@@ -54,19 +54,32 @@ export default function SiteHeader() {
     setOpen(false);
     trigger.current?.focus();
   };
+  // On the homepage the active link follows scroll position; elsewhere it follows the route.
+  const routeSection =
+    pathname === "/"
+      ? active
+      : pathname.startsWith("/projects")
+        ? "projects"
+        : pathname.startsWith("/services")
+          ? "expertise"
+          : pathname.startsWith("/about")
+            ? "about"
+            : pathname.startsWith("/contact")
+              ? "contact"
+              : "";
   return (
     <>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <header className={`site-header ${scrolled || ["/projects", "/privacy", "/terms"].includes(pathname) ? "is-scrolled" : ""}`}>
+      <header className={`site-header ${scrolled || ["/projects", "/privacy", "/terms", "/contact"].includes(pathname) ? "is-scrolled" : ""}`}>
         <Link href="/" className="brand" aria-label="BR Construction home">
           <BrandLogo />
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation.map(([label, href]) => (
             <Link
-              className={active === href.split("#")[1] ? "active" : ""}
+              className={routeSection === href.split("#")[1] ? "active" : ""}
               key={label}
               href={href}
             >

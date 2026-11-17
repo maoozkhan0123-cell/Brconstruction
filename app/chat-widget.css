@@ -10,48 +10,36 @@
 }
 
 .br-chat-launcher {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 11px;
-  min-height: 58px;
-  padding: 6px 18px 6px 6px;
+  display: grid;
+  place-items: center;
   margin-left: auto;
-  border: 1px solid #ddbd81;
-  border-radius: 4px;
-  background: var(--gold);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: var(--black);
-  box-shadow: 0 6px 28px #0005;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  transition: background 160ms ease, transform 160ms ease;
+  transition: transform 200ms ease;
 }
 
 .br-chat-launcher:hover {
-  background: #d6b778;
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
 }
 
-.br-chat-launcher-dot {
-  width: 6px;
-  height: 6px;
-  margin-left: 3px;
-  border-radius: 50%;
-  background: var(--black);
+.br-chat-launcher > .br-chat-mascot {
+  flex-basis: 68px;
+  width: 68px;
+  height: 68px;
+  border: 2px solid var(--gold);
+  box-shadow: 0 8px 26px #0006;
 }
 
 .br-chat-launcher.is-open {
-  min-width: 54px;
-  min-height: 54px;
-  padding: 14px;
+  width: 54px;
+  height: 54px;
+  border: 1px solid #ffffff36;
   background: #1d2025;
-  border-color: #ffffff36;
   color: var(--gold);
-}
-
-.br-chat-launcher.is-open > span {
-  display: none;
+  box-shadow: 0 6px 28px #0005;
 }
 
 .br-chat-mascot {
@@ -470,7 +458,7 @@
   gap: 10px;
   min-height: 43px;
   padding: 11px 13px;
-  border-radius: 3px;
+  border-radius: 999px;
   background: var(--gold);
   color: var(--black);
   text-align: left;
@@ -576,7 +564,7 @@
   flex: 0 0 34px;
   width: 34px;
   height: 34px;
-  border-radius: 3px;
+  border-radius: 999px;
   background: var(--gold);
   color: var(--black);
 }
@@ -640,14 +628,14 @@
     width: calc(100vw - 32px);
     height: min(650px, calc(100dvh - 108px));
   }
-  .br-chat-launcher {
-    min-height: 56px;
-    padding: 6px 15px 6px 6px;
+  .br-chat-launcher > .br-chat-mascot {
+    flex-basis: 58px;
+    width: 58px;
+    height: 58px;
   }
   .br-chat-launcher.is-open {
-    min-width: 51px;
-    min-height: 51px;
-    padding: 12px;
+    width: 51px;
+    height: 51px;
   }
   .br-chat-header {
     min-height: 78px;

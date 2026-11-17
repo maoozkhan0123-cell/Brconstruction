@@ -7,14 +7,32 @@ import ProjectExplorer from "./ProjectExplorer";
 import ConstructionHero from "./ConstructionHero";
 import { ConstructionServices, ConstructionProcess, ConstructionFAQs } from "./ConstructionSections";
 import ContactDetails from "./ContactDetails";
+import AboutShowcase from "./AboutShowcase";
+import {
+  Building2,
+  ClipboardCheck,
+  Compass,
+  DraftingCompass,
+  Gem,
+  HardHat,
+  MessagesSquare,
+  PanelsTopLeft,
+  ShieldCheck,
+} from "lucide-react";
+
+const aboutPillars = [
+  { icon: HardHat, title: "Construction", text: "Site execution & supervision" },
+  { icon: Building2, title: "Engineering", text: "Structure & civil works" },
+  { icon: DraftingCompass, title: "Architecture", text: "Concepts & drawings" },
+  { icon: PanelsTopLeft, title: "Interiors", text: "Fit-outs & finishes" },
+];
 function About() {
   return (
     <section id="about" className="about-section light-section section-pad">
+      <div className="about-backdrop" aria-hidden="true">
+        <span>BR</span>
+      </div>
       <div className="about-text reveal">
-        <span className="section-label">
-          <i />
-          01 / WHO WE ARE
-        </span>
         <h2 className="display-heading">
           Built on vision.
           <br />
@@ -32,37 +50,21 @@ function About() {
           one considered plan, from the first scope discussion to the final
           finishing detail.
         </p>
-        <Link href="/about" className="text-link">
-          Discover our story <Arrow diagonal />
-        </Link>
+        <ul className="about-pillars">
+          {aboutPillars.map(({ icon: Icon, title, text }) => (
+            <li key={title}>
+              <span className="about-pillars__icon">
+                <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
+              </span>
+              <span>
+                <strong>{title}</strong>
+                <small>{text}</small>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="about-composition reveal">
-        <div className="about-outline" />
-        <img
-          className="about-main"
-          src="/images/pakistan-bungalow-lahore.webp"
-          alt="Modern bungalow facade in Lahore, Pakistan — residential design reference"
-          loading="lazy"
-          width="1600"
-          height="1400"
-        />
-        <div className="about-detail">
-          <img
-            src="/images/pakistan-interior-islamabad.webp"
-            alt="Contemporary interior in Islamabad, Pakistan — a separate interior design reference"
-            loading="lazy"
-            width="1400"
-            height="934"
-          />
-          <span>ISLAMABAD / INTERIOR REFERENCE</span>
-        </div>
-        <span className="image-coordinate">
-          FIG. 01 — PAKISTANI RESIDENTIAL REFERENCES
-        </span>
-        <span className="vertical-annotation">
-          BUILT FOR THE WAY WE LIVE.
-        </span>
-      </div>
+      <AboutShowcase />
     </section>
   );
 }
@@ -70,133 +72,225 @@ function Portfolio() {
   return (
     <section
       id="projects"
-      className="portfolio-section light-section section-pad"
+      className="portfolio-section section-pad"
     >
       <div className="section-intro reveal">
-        <div>
-          <span className="section-label">
-            <i />
-            03 / SPACES & POSSIBILITIES
-          </span>
-          <h2 className="display-heading">
-            Spaces that speak.
-            <br />
-            <em>Structures that endure.</em>
-          </h2>
-        </div>
-        <p>
-          An exploration of form, light, and material.
-          <br className="desktop-break" /> A glimpse of what’s possible.
-        </p>
+        <h2 className="display-heading">
+          Spaces that speak.
+          <br />
+          <em>Structures that endure.</em>
+        </h2>
       </div>
       <ProjectExplorer />
     </section>
   );
 }
+const principles = [
+  {
+    icon: Compass,
+    title: "Purposeful design",
+    text: "Every decision begins with how a space should function, feel, and evolve.",
+  },
+  {
+    icon: Building2,
+    title: "Structural integrity",
+    text: "Engineering discipline forms the foundation of enduring architecture.",
+  },
+  {
+    icon: Gem,
+    title: "Refined craftsmanship",
+    text: "Materials, proportions, and details are executed with deliberate precision.",
+  },
+];
+
+/** BR Construction renders for Villa 36 — two per principle. */
+const philosophySlides = [
+  { principle: 0, image: "/images/villa36-living-dining.webp", caption: "Open-plan living & dining", alt: "Double-height living and dining room with sculptural lighting, Villa 36" },
+  { principle: 0, image: "/images/villa36-bedroom.webp", caption: "Master bedroom", alt: "Bedroom with upholstered bed and metal wall art, Villa 36" },
+  { principle: 1, image: "/images/villa36-staircase.webp", caption: "Floating glass staircase", alt: "Cantilevered stone staircase with glass balustrade and indoor planter, Villa 36" },
+  { principle: 1, image: "/images/villa36-lounge.webp", caption: "Marble feature lounge", alt: "Lounge with full-height marble feature wall and ring chandelier, Villa 36" },
+  { principle: 2, image: "/images/villa36-wardrobe.webp", caption: "Backlit glass wardrobe", alt: "Walk-in style glass wardrobe with timber shelving and dressing table, Villa 36" },
+  { principle: 2, image: "/images/villa36-tv-wall.webp", caption: "Marble TV wall & display", alt: "Marble media wall with lit timber display niche, Villa 36" },
+];
+
+const PRINCIPLE_INTERVAL = 2800;
+
 function Philosophy() {
+  const [slide, setSlide] = useState(0);
+  const [hovering, setHovering] = useState(false);
+  const active = philosophySlides[slide].principle;
+  const showPrinciple = (index: number) =>
+    setSlide(philosophySlides.findIndex((item) => item.principle === index));
+
+  useEffect(() => {
+    if (hovering || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(
+      () => setSlide((slide + 1) % philosophySlides.length),
+      PRINCIPLE_INTERVAL,
+    );
+    return () => window.clearTimeout(timer);
+  }, [slide, hovering]);
+
   return (
-    <section className="philosophy-section">
-      <img
-        src="/images/philosophy.webp"
-        alt="Sculptural architectural forms exploring the interplay of light and shadow — visual reference"
-        loading="lazy"
-        width="1600"
-        height="1000"
-      />
-      <div className="philosophy-shade" />
-      <div className="philosophy-inner">
-        <span className="section-label">THE BR PHILOSOPHY</span>
+    <section className="philosophy-section section-pad">
+      <div className="philosophy-copy reveal">
         <h2 className="display-heading">
           Where engineering
           <br />
           meets <em>artistry.</em>
         </h2>
-        <p>
-          Form and function. Precision and expression.
-          <br />
-          We believe the most enduring spaces are born
-          <br className="desktop-break" /> where these worlds meet.
+        <p className="philosophy-lead">
+          Form and function. Precision and expression. We believe the most
+          enduring spaces are born where these worlds meet.
         </p>
-        <div className="principles">
-          {[
-            [
-              "01",
-              "Purposeful design",
-              "Every decision begins with how a space should function, feel, and evolve.",
-            ],
-            [
-              "02",
-              "Structural integrity",
-              "Engineering discipline forms the foundation of enduring architecture.",
-            ],
-            [
-              "03",
-              "Refined craftsmanship",
-              "Materials, proportions, and details are executed with deliberate precision.",
-            ],
-          ].map(([n, title, text]) => (
-            <div key={n}>
-              <span>{n}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </div>
+        <ol
+          className="philosophy-principles"
+          onMouseLeave={() => setHovering(false)}
+        >
+          {principles.map(({ icon: Icon, title, text }, index) => (
+            <li key={title}>
+              <button
+                type="button"
+                className={index === active ? "is-active" : ""}
+                aria-pressed={index === active}
+                onMouseEnter={() => {
+                  setHovering(true);
+                  if (index !== active) showPrinciple(index);
+                }}
+                onFocus={() => {
+                  if (index !== active) showPrinciple(index);
+                }}
+                onClick={() => showPrinciple(index)}
+              >
+                <span className="philosophy-principles__icon">
+                  <Icon size={22} strokeWidth={1.5} aria-hidden="true" />
+                </span>
+                <span className="philosophy-principles__body">
+                  <strong>
+                    <span>0{index + 1}</span>
+                    {title}
+                  </strong>
+                  <small>{text}</small>
+                </span>
+              </button>
+            </li>
           ))}
+        </ol>
+      </div>
+      <div className="philosophy-visual reveal">
+        <div className="philosophy-visual__frame" aria-hidden="true" />
+        <div className="philosophy-visual__stage">
+          {philosophySlides.map((item, index) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={item.image}
+              src={item.image}
+              alt={index === slide ? item.alt : ""}
+              aria-hidden={index !== slide}
+              className={index === slide ? "is-active" : ""}
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+          <div className="philosophy-visual__caption" key={slide}>
+            <span>0{active + 1}</span>
+            <strong>{principles[active].title}</strong>
+            <small>Villa 36 · {philosophySlides[slide].caption}</small>
+          </div>
+          <div className="philosophy-visual__bars" aria-hidden="true">
+            {philosophySlides.map((item, index) => (
+              <i
+                key={item.image}
+                className={index === slide ? "is-active" : index < slide ? "is-done" : ""}
+              >
+                {index === slide && !hovering && (
+                  <b key={slide} style={{ animationDuration: `${PRINCIPLE_INTERVAL}ms` }} />
+                )}
+              </i>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+const commitments = [
+  {
+    icon: MessagesSquare,
+    label: "Open communication",
+    title: "Your vision, understood.",
+    text: "A remarkable result begins with a thoughtful conversation. We listen closely, ask the right questions, and keep your ambitions at the heart of every decision.",
+  },
+  {
+    icon: ClipboardCheck,
+    label: "Thoughtful transparency",
+    title: "Clarity, from the outset.",
+    text: "Clear scopes, considered budgets, and coordinated plans create a shared understanding. You should know what comes next and why it matters.",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Quality & accountability",
+    title: "Care in every detail.",
+    text: "From structural thinking to the touch of a finished surface, we bring the same considered attention to every part of your project.",
+  },
+];
+
+const commitmentTicker = [
+  "Open communication",
+  "Clear scopes",
+  "Considered budgets",
+  "Site supervision",
+  "Structural thinking",
+  "Quality finishes",
+  "One accountable team",
+];
+
 function Commitment() {
-  const [active, setActive] = useState(0);
-  const commitments = [
-    {
-      title: "Your vision, understood.",
-      text: "A remarkable result begins with a thoughtful conversation. We listen closely, ask the right questions, and keep your ambitions at the heart of every decision.",
-      label: "OPEN COMMUNICATION",
-    },
-    {
-      title: "Clarity, from the outset.",
-      text: "Clear scopes, considered budgets, and coordinated plans create a shared understanding. You should know what comes next and why it matters.",
-      label: "THOUGHTFUL TRANSPARENCY",
-    },
-    {
-      title: "Care in every detail.",
-      text: "From structural thinking to the touch of a finished surface, we bring the same considered attention to every part of your project.",
-      label: "QUALITY & ACCOUNTABILITY",
-    },
-  ];
   return (
-    <section className="commitment-section light-section section-pad">
-      <span className="section-label">
-        <i />
-        05 / OUR COMMITMENT TO YOU
-      </span>
-      <div className="commitment-content" aria-live="polite">
-        <span className="quote-mark" aria-hidden="true">
-          “
-        </span>
-        <h2>{commitments[active].title}</h2>
-        <p>{commitments[active].text}</p>
-        <span className="section-label">{commitments[active].label}</span>
+    <section id="commitment" className="commitment-section section-pad">
+      <div className="commitment-intro reveal">
+        <h2 className="display-heading">
+          Trust is built.
+          <br />
+          <em>Every step of the way.</em>
+        </h2>
       </div>
-      <div className="commitment-bottom">
-        <span>TRUST IS BUILT. EVERY STEP OF THE WAY.</span>
+
+      <ol className="commitment-grid">
+        {commitments.map(({ icon: Icon, label, title, text }, index) => (
+          <li
+            className="commitment-card reveal"
+            key={title}
+            style={{ animationDelay: `${index * 110}ms` }}
+          >
+            <span className="commitment-card__glow" aria-hidden="true" />
+            <div className="commitment-card__top">
+              <span className="commitment-card__icon">
+                <Icon size={24} strokeWidth={1.5} aria-hidden="true" />
+              </span>
+              <span className="commitment-card__number" aria-hidden="true">
+                0{index + 1}
+              </span>
+            </div>
+            <span className="commitment-card__label">{label}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+            <span className="commitment-card__quote" aria-hidden="true">
+              &rdquo;
+            </span>
+          </li>
+        ))}
+      </ol>
+
+      <div className="commitment-ticker" aria-hidden="true">
         <div>
-          <button
-            className="icon-button"
-            onClick={() => setActive((active + 2) % 3)}
-            aria-label="Previous commitment"
-          >
-            <Arrow style={{ transform: "rotate(180deg)" }} />
-          </button>
-          <span>0{active + 1} / 03</span>
-          <button
-            className="icon-button"
-            onClick={() => setActive((active + 1) % 3)}
-            aria-label="Next commitment"
-          >
-            <Arrow />
-          </button>
+          {[...commitmentTicker, ...commitmentTicker].map((item, i) => (
+            <span key={i}>
+              {item}
+              <i>✦</i>
+            </span>
+          ))}
         </div>
       </div>
     </section>
@@ -213,10 +307,6 @@ export function ContactSection({
       className={`contact-section section-pad ${standalone ? "standalone-contact" : ""}`}
     >
       <div className="contact-intro">
-        <span className="section-label">
-          <i />
-          06 / BEGIN SOMETHING EXTRAORDINARY
-        </span>
         {standalone ? (
           <h1 className="display-heading">
             Your vision.
@@ -234,12 +324,6 @@ export function ContactSection({
             <em>beginning.</em>
           </h2>
         )}
-        <p>
-          A signature residence. A commercial landmark.
-          <br className="desktop-break" /> A space, entirely reimagined. Let’s
-          explore
-          <br className="desktop-break" /> what’s possible, together.
-        </p>
         <ContactDetails />
         <div className="contact-image">
           <img
@@ -276,19 +360,6 @@ export default function HomeSections() {
   return (
     <main id="main-content">
       <ConstructionHero />
-      <div className="discipline-strip">
-        <span>VISION IN EVERY LINE.</span>
-        <div>
-          <span>Construction</span>
-          <i>+</i>
-          <span>Engineering</span>
-          <i>+</i>
-          <span>Architecture</span>
-          <i>+</i>
-          <span>Interiors</span>
-        </div>
-        <span>PRECISION IN EVERY DETAIL.</span>
-      </div>
       <About />
       <ConstructionServices />
       <Portfolio />
