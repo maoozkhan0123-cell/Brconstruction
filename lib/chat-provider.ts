@@ -20,6 +20,7 @@ type ChatProviderOptions = {
   systemPrompt: string;
   model?: string;
   fetcher?: typeof fetch;
+  waiter?: (milliseconds: number) => Promise<void>;
 };
 
 /** Only the server constructs the system message; provider errors never reach visitors. */
@@ -32,6 +33,7 @@ export async function completeChat(messages: ChatMessage[], options: ChatProvide
     // Both attempts share a deadline, leaving room for storage protection
     // within the widget's 50-second request timeout.
     const deadline = AbortSignal.timeout(30000);
+    const startedAt = Date.now();
     let maxCompletionTokens = 800;
     for (let attempt = 0; attempt < 2; attempt++) {
       let response: Response;
@@ -62,6 +64,13 @@ export async function completeChat(messages: ChatMessage[], options: ChatProvide
         await response.body?.cancel();
         if (attempt === 0 && [408, 500, 502, 503, 504].includes(response.status) && !deadline.aborted) continue;
         const retry = Number(response.headers.get("retry-after"));
+        // Respect a short provider cooldown instead of immediately failing a
+        // conversation. Longer limits return the existing visitor countdown.
+        if (response.status === 429 && attempt === 0 && Number.isFinite(retry) && retry > 0 && retry <= 15 &&
+          Math.ceil(retry) * 1000 + 1000 < 30000 - (Date.now() - startedAt)) {
+          await (options.waiter || (milliseconds => new Promise<void>(resolve => setTimeout(resolve, milliseconds))))(Math.ceil(retry) * 1000);
+          continue;
+        }
         throw new ChatProviderError(response.status === 429 ? 429 : 503,
           response.status === 429 ? (Number.isFinite(retry) && retry > 0 ? Math.min(900, Math.ceil(retry)) : 60) : undefined);
       }

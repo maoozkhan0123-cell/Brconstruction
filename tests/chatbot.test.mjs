@@ -132,6 +132,33 @@ test("authentication errors and quota errors do not retry, and outages stop afte
   }
 });
 
+test("short provider token cooldowns wait for Retry-After and recover within two attempts", async () => {
+  let attempts = 0;
+  const waits = [];
+  const reply = await completeChat([visitor("Where is your office?")], { ...options,
+    waiter: async milliseconds => { waits.push(milliseconds); },
+    fetcher: async () => ++attempts === 1
+      ? new Response("rate limit", { status: 429, headers: { "retry-after": "2" } })
+      : completion("Office No. 403, Bali Business Boulevard."),
+  });
+  assert.equal(reply, "Office No. 403, Bali Business Boulevard.");
+  assert.deepEqual(waits, [2000]);
+  assert.equal(attempts, 2);
+});
+
+test("persistent or long provider limits never loop or wait past the retry budget", async () => {
+  for (const [retryAfter, expectedAttempts, expectedWaits] of [["2", 2, [2000]], ["16", 1, []], ["60", 1, []]]) {
+    let attempts = 0;
+    const waits = [];
+    await assert.rejects(completeChat([visitor("Hello")], { ...options,
+      waiter: async milliseconds => { waits.push(milliseconds); },
+      fetcher: async () => { attempts++; return new Response("rate limit", { status: 429, headers: { "retry-after": retryAfter } }); },
+    }), error => error instanceof ChatProviderError && error.status === 429 && error.retryAfter === Number(retryAfter));
+    assert.equal(attempts, expectedAttempts);
+    assert.deepEqual(waits, expectedWaits);
+  }
+});
+
 function blobClient() {
   const objects = new Map();
   let revision = 0;

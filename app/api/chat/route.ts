@@ -53,7 +53,10 @@ export async function POST(request: Request) {
     const reply = await completeChat(result.data.messages, {
       apiKey,
       model: process.env.GROQ_CHAT_MODEL,
-      systemPrompt: getChatSystemPrompt(inferChatLanguage(result.data.messages[result.data.messages.length - 1].content)),
+      systemPrompt: getChatSystemPrompt(
+        inferChatLanguage(result.data.messages[result.data.messages.length - 1].content),
+        result.data.messages.map(message => message.content).join(" "),
+      ),
     });
     return respond({ ok: true, reply });
   } catch (error) {
