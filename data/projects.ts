@@ -1,3 +1,5 @@
+import { suppliedProjects } from "./supplied-projects";
+
 export type ProjectCategory =
   | "Architecture"
   | "Interior Design"
@@ -5,6 +7,8 @@ export type ProjectCategory =
   | "Commercial";
 
 export interface Project {
+  presentation?: "project-design";
+  designCredit?: string;
   slug: string;
   title: string;
   category: ProjectCategory;
@@ -30,6 +34,7 @@ export const projectCategories: ProjectCategory[] = [
 ];
 
 export const projects: Project[] = [
+  ...suppliedProjects,
   {
     slug: "stillwater-residence",
     title: "The Stillwater Residence",

@@ -4,7 +4,7 @@ import { VerifiedCaseStudies } from "@/components/CompanyProof";
 export const metadata: Metadata = {
   title: "Project Collection",
   description:
-    "Explore illustrative architectural concepts, bespoke interiors, and contemporary spaces. Visual references for your next project.",
+    "Explore residential and commercial project presentations, architectural sketches, and interior design visualizations from BR Construction.",
   alternates: { canonical: "/projects" },
 };
 export default function Projects() {
@@ -15,7 +15,7 @@ export default function Projects() {
     >
       <span className="section-label">
         <i />
-        THE BR COLLECTION / ILLUSTRATIVE CONCEPTS
+        THE BR COLLECTION / PROJECTS & DESIGN STUDIES
       </span>
       <h1 className="display-heading">
         A world of

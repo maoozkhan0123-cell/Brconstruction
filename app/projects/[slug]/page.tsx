@@ -18,10 +18,11 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);
-  if (!project) return { title: "Concept not found" };
+  if (!project) return { title: "Project not found" };
+  const isDesign = project.presentation === "project-design";
   return {
-    title: `${project.title} — Illustrative Concept`,
-    description: `${project.description} An illustrative ${project.category.toLowerCase()} concept, not completed BR Construction work.`,
+    title: `${project.title} — ${isDesign ? "Project Design" : "Illustrative Concept"}`,
+    description: isDesign ? project.description : `${project.description} An illustrative ${project.category.toLowerCase()} concept, not completed BR Construction work.`,
     alternates: { canonical: `${origin}/projects/${project.slug}` },
     openGraph: {
       title: `${project.title} | BR Construction`,
@@ -35,6 +36,7 @@ export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);
   if (!project) notFound();
+  const isDesign = project.presentation === "project-design";
   const related = projects
     .filter((item) => item.slug !== project.slug)
     .slice(0, 2);
@@ -81,23 +83,24 @@ export default async function ProjectPage({ params }: PageProps) {
             Projects <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
           <p className="section-label">
-            {project.category} / Illustrative concept
+            {project.category} / {isDesign ? "Project design" : "Illustrative concept"}
           </p>
           <h1 className="display-heading">{project.title}</h1>
           <p>{project.description}</p>
           <a className="text-link" href="#project-overview">
-            Explore the concept <ArrowDown size={17} aria-hidden="true" />
+            Explore the {isDesign ? "project" : "concept"} <ArrowDown size={17} aria-hidden="true" />
           </a>
         </div>
       </section>
       <div className="detail-body" id="project-overview">
         <div className="demo-notice">
-          <span className="section-label">A note on this concept</span>
+          <span className="section-label">{isDesign ? "About this presentation" : "A note on this concept"}</span>
           <p>
-            This project is an illustrative design study. Reference photographs
-            are not BR Construction commissions. No client, location, completion
-            date, or built project specifications are claimed.
+            {isDesign
+              ? "These project visualizations present the design direction, spaces, and finishes shown in the supplied presentation."
+              : "This project is an illustrative design study. Reference photographs are not BR Construction commissions. No client, location, completion date, or built project specifications are claimed."}
           </p>
+          {project.designCredit && <p>{project.designCredit}</p>}
         </div>
         <section className="detail-intro">
           <div>
@@ -117,19 +120,21 @@ export default async function ProjectPage({ params }: PageProps) {
               </div>
               <div>
                 <dt>Project status</dt>
-                <dd>Illustrative concept</dd>
+                <dd>{isDesign ? "Design presentation" : "Illustrative concept"}</dd>
               </div>
-              <div>
-                <dt>Location / area / year</dt>
-                <dd>Not applicable to concept</dd>
-              </div>
+              {(!isDesign || project.location) && (
+                <div>
+                  <dt>{isDesign ? "Location" : "Location / area / year"}</dt>
+                  <dd>{isDesign ? project.location : "Not applicable to concept"}</dd>
+                </div>
+              )}
             </dl>
           </div>
         </section>
         <ProjectGallery images={project.gallery} title={project.title} />
         <div className="detail-grid">
           <section className="detail-section">
-            <p className="section-label">02 / Concept objectives</p>
+            <p className="section-label">02 / {isDesign ? "Design" : "Concept"} objectives</p>
             <h2>A sense of purpose.</h2>
             <p>{project.objectives}</p>
           </section>
@@ -152,8 +157,7 @@ export default async function ProjectPage({ params }: PageProps) {
               ))}
             </ul>
             <p>
-              Materials are illustrative. Final specifications require
-              project-specific design and approval.
+              {isDesign ? "Material direction is shown through the supplied project visualizations." : "Materials are illustrative. Final specifications require project-specific design and approval."}
             </p>
           </section>
         </div>
@@ -177,7 +181,7 @@ export default async function ProjectPage({ params }: PageProps) {
               <h2 className="display-heading">Other perspectives.</h2>
             </div>
             <Link className="text-link" href="/projects">
-              All concepts <ArrowUpRight size={17} aria-hidden="true" />
+              Projects <ArrowUpRight size={17} aria-hidden="true" />
             </Link>
           </div>
           <div className="related-project-grid">
@@ -198,7 +202,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 </div>
                 <div className="project-meta">
                   <span className="section-label">
-                    {item.category} / Concept
+                    {item.category} / {item.presentation === "project-design" ? "Project design" : "Concept"}
                   </span>
                   <h3>
                     {item.title}

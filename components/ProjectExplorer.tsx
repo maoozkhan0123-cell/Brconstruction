@@ -33,7 +33,7 @@ export default function ProjectExplorer({
   }
   const visible = projects
     .filter((p) => filter === "All Projects" || p.category === filter)
-    .slice(0, expanded ? 99 : 4);
+    .slice(0, expanded ? projects.length : 4);
   const bento = !expanded && filter === "All Projects";
   return (
     <>
@@ -87,6 +87,11 @@ export default function ProjectExplorer({
           </Link>
         ))}
       </div>
+      {!expanded && (
+        <div className="pf-footer">
+          <Link className="text-link" href="/projects">Explore projects <Arrow diagonal /></Link>
+        </div>
+      )}
     </>
   );
 }

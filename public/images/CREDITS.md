@@ -1,4 +1,33 @@
-# Demonstration imagery
+# Project imagery and source credits
+
+## Owner-supplied project presentations
+
+On November 19, 2026, the site owner supplied five PDF presentations and six
+JPEG images for publication in the project collection. The 79 PDF views and six
+JPEGs were extracted or resized into 85 optimized WebP images under
+`public/images/projects/`. Architectural content was not generated or changed.
+The original source files remain in the local `public/` directory.
+
+| Project / image directory | Supplied source |
+| --- | --- |
+| Villa No. 36 / `villa36` | `BTK-VILLA NO 36- RENDERS.pdf` (27 views) |
+| Head Office Interiors / `head-office` | `Dying Headoffice.pdf` (23 views) |
+| Gold Packages Office / `gold-packages` | `GOLD PACKAGES RENDERS.pdf.pdf` (15 views) |
+| K.D.A. 1,000 Yard Residence / `kda-residence` | `K.D.A 1000 YDs.pdf` (11 views) |
+| Residence — Option 02 / `option-02` | `OPTION 02.pdf` (3 views) |
+| The Classical Villa / `classical-villa` | November 17 WhatsApp images numbered (1), (2), (3), and (4) |
+| The Contemporary Villa / `contemporary-villa` | The unnumbered November 17 WhatsApp image |
+| Bedroom Wall & Interior Study / `bedroom-wall-study` | November 17 WhatsApp image numbered (5) |
+
+These entries are project design presentations. No construction completion,
+client endorsement, delivery date, or construction outcome is inferred from a
+rendering. Gold Packages' source sheets credit **Zaavia Design & Co.** for
+architecture and design; the Option 02 visuals also carry that credit. Those
+credits are retained on their project pages. Gold Packages' published location
+is taken from the supplied sheets; unconfirmed project locations are omitted.
+
+The original five illustrative portfolio concepts remain separately identified
+as concepts. Their image sources and the architectural sketch sources follow.
 
 ## Architectural concept drawings
 
