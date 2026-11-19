@@ -149,7 +149,7 @@ export const projects: Project[] = [
   {
     // Retain the existing public URL when changing this collection entry.
     slug: "meridian-workplace",
-    title: "The Lahore Bungalow",
+    title: "The Bungalow",
     category: "Construction",
     image: "/images/pakistan-bungalow-lahore.webp",
     description:
