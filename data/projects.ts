@@ -34,7 +34,7 @@ export const projects: Project[] = [
     slug: "stillwater-residence",
     title: "The Stillwater Residence",
     category: "Architecture",
-    image: "/images/project-01.webp",
+    image: "/images/stillwater-architecture-drawing.webp",
     description:
       "An exploration of quiet geometry, natural light, and the art of living well.",
     service: "architecture-engineering",
@@ -58,8 +58,8 @@ export const projects: Project[] = [
       "A visual proposition for a home shaped by proportion and restraint. Location, floor area, programme, engineering specifications, budget, and completion date are intentionally unpublished because this is a design concept.",
     gallery: [
       {
-        src: "/images/project-01.webp",
-        alt: "Architectural inspiration for a contemporary residence with strong horizontal lines",
+        src: "/images/stillwater-architecture-drawing.webp",
+        alt: "Architectural concept drawing of The Stillwater Residence with a perspective sketch, floor plan, and elevations",
       },
       {
         src: "/images/detail-01.webp",
@@ -183,7 +183,7 @@ export const projects: Project[] = [
     slug: "casa-forma",
     title: "Casa Forma",
     category: "Architecture",
-    image: "/images/project-05.webp",
+    image: "/images/casa-forma-architecture-drawing.webp",
     description:
       "Sculptural form meets a quiet palette in this contemporary residential study.",
     service: "turnkey-renovation",
@@ -207,8 +207,8 @@ export const projects: Project[] = [
       "An illustrative direction for a fully coordinated home. No before-and-after comparison is shown because no verified renovation assets have been supplied.",
     gallery: [
       {
-        src: "/images/project-05.webp",
-        alt: "Sculptural residential architectural reference with natural finishes",
+        src: "/images/casa-forma-architecture-drawing.webp",
+        alt: "Architectural concept drawing of Casa Forma with a sloping-roof perspective, floor plan, and front elevation",
       },
       {
         src: "/images/detail-05.webp",

@@ -1,4 +1,16 @@
-# Demonstration photography
+# Demonstration imagery
+
+## Architectural concept drawings
+
+`stillwater-architecture-drawing.webp` and
+`casa-forma-architecture-drawing.webp` were generated with the built-in Imagegen
+tool on November 18, 2026. They are illustrative architectural studies, not
+construction documents or records of completed BR Construction commissions.
+The WebP drawings are used for the Architecture project cards, detail-page
+heroes, and gallery covers. The original generation prompts are retained in
+`outputs/architecture-drawing-prompts.txt`.
+
+## Reference photography
 
 These photographs are stock architectural references. They do not depict verified BR Construction commissions. Project names, study descriptions, and their association with these photographs are illustrative.
 
