@@ -47,7 +47,7 @@ export default function ProjectExplorer({
               aria-pressed={filter === category}
               className={filter === category ? "is-selected" : ""}
             >
-              {category}
+              {category === "All Projects" ? "Projects" : category}
               <span>
                 {category === "All Projects"
                   ? projects.length

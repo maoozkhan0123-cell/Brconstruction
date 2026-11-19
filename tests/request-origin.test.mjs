@@ -21,21 +21,23 @@ test("exact public origins remain accepted regardless of the local alias context
   }
 });
 
-test("production and Vercel reject loopback aliases and unrelated public origins", () => {
-  for (const context of [production, vercelDevelopment, { development: false, vercel: true }]) {
+test("Vercel rejects loopback aliases and unrelated public origins", () => {
+  for (const context of [vercelDevelopment, { development: false, vercel: true }]) {
     assert.equal(isAllowedRequestOrigin(request("http://localhost:5173/api/chat", "http://127.0.0.1:5173", "127.0.0.1:5173"), context), false);
     assert.equal(isAllowedRequestOrigin(request("https://brconstruction.vercel.app/api/chat", "https://unrelated.example", "unrelated.example"), context), false);
   }
 });
 
-test("local development permits normalized localhost IPv4 and IPv6 aliases", () => {
+test("local development and production previews permit normalized localhost IPv4 and IPv6 aliases", () => {
   const hosts = ["localhost", "127.0.0.1", "[::1]"];
-  for (const normalizedHost of hosts) {
-    for (const browserHost of hosts) {
-      assert.equal(isAllowedRequestOrigin(request(`http://${normalizedHost}:5173/api/chat`, `http://${browserHost}:5173`, `${browserHost}:5173`), development), true);
+  for (const context of [production, development]) {
+    for (const normalizedHost of hosts) {
+      for (const browserHost of hosts) {
+        assert.equal(isAllowedRequestOrigin(request(`http://${normalizedHost}:5173/api/chat`, `http://${browserHost}:5173`, `${browserHost}:5173`), context), true);
+      }
     }
+    assert.equal(isAllowedRequestOrigin(request("https://localhost:5173/api/inquiries", "https://127.0.0.1:5173", "127.0.0.1:5173"), context), true);
   }
-  assert.equal(isAllowedRequestOrigin(request("https://localhost:5173/api/inquiries", "https://127.0.0.1:5173", "127.0.0.1:5173"), development), true);
 });
 
 test("loopback alias exceptions require the actual browser Host header", () => {
@@ -45,7 +47,7 @@ test("loopback alias exceptions require the actual browser Host header", () => {
   assert.equal(isAllowedRequestOrigin(request("http://localhost:5173/api/chat", "http://127.0.0.1:5173", "127.0.0.1:5173.attacker.example"), development), false);
 });
 
-test("development does not weaken port protocol or public-host boundaries", () => {
+test("local preview aliases do not weaken port protocol or public-host boundaries", () => {
   const cases = [
     ["http://localhost:5173/api/chat", "http://127.0.0.1:3000", "127.0.0.1:3000"],
     ["http://localhost:5173/api/chat", "https://127.0.0.1:5173", "127.0.0.1:5173"],
@@ -56,8 +58,10 @@ test("development does not weaken port protocol or public-host boundaries", () =
     ["http://127.0.0.2:5173/api/chat", "http://localhost:5173", "localhost:5173"],
     ["ftp://localhost:5173/api/chat", "ftp://127.0.0.1:5173", "127.0.0.1:5173"],
   ];
-  for (const [url, origin, host] of cases) {
-    assert.equal(isAllowedRequestOrigin(request(url, origin, host), development), false);
+  for (const context of [production, development]) {
+    for (const [url, origin, host] of cases) {
+      assert.equal(isAllowedRequestOrigin(request(url, origin, host), context), false);
+    }
   }
 });
 

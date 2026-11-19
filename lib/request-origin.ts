@@ -5,7 +5,7 @@ export type RequestOriginContext = {
 
 const LOOPBACK_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 
-/** Keep production strict; accommodate Next's loopback normalization only in local development. */
+/** Keep hosted origins strict; accommodate Next's loopback normalization in local previews. */
 export function isAllowedRequestOrigin(
   request: Request,
   context: RequestOriginContext = {
@@ -20,7 +20,7 @@ export function isAllowedRequestOrigin(
   try {
     const requestUrl = new URL(request.url);
     if (origin === requestUrl.origin) return true;
-    if (!context.development || context.vercel) return false;
+    if (context.vercel) return false;
 
     const originUrl = new URL(origin);
     // Origin headers contain an origin only, never credentials, paths, queries,

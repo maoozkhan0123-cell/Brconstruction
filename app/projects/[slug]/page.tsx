@@ -78,7 +78,7 @@ export default async function ProjectPage({ params }: PageProps) {
         <div className="detail-hero-overlay" />
         <div className="detail-hero-content">
           <Link className="text-link" href="/projects">
-            All projects <ArrowUpRight size={16} aria-hidden="true" />
+            Projects <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
           <p className="section-label">
             {project.category} / Illustrative concept

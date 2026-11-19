@@ -88,6 +88,50 @@ test("provider responses redact key-shaped content and bound rate-limit Retry-Af
   await assert.rejects(completeChat([visitor("Hello")], { ...options, fetcher: async () => new Response("private", { status: 429, headers: { "retry-after": "9999" } }) }), error => error.status === 429 && error.retryAfter === 900);
 });
 
+test("a transient provider outage or dropped connection retries once with the same conversation", async () => {
+  for (const failure of [
+    () => new Response("private upstream failure", { status: 503 }),
+    () => { throw new TypeError("Connection reset"); },
+  ]) {
+    let attempts = 0;
+    const reply = await completeChat([visitor("Where is your office?")], { ...options, fetcher: async (_url, init) => {
+      attempts++;
+      assert.deepEqual(JSON.parse(init.body).messages, [{ role: "system", content: options.systemPrompt }, visitor("Where is your office?")]);
+      return attempts === 1 ? failure() : completion("Office No. 403, Bali Business Boulevard.");
+    } });
+    assert.equal(reply, "Office No. 403, Bali Business Boulevard.");
+    assert.equal(attempts, 2);
+  }
+});
+
+test("an empty answer truncated by reasoning receives one bounded completion-budget retry", async () => {
+  let attempts = 0;
+  const reply = await completeChat([visitor("How do I start?")], { ...options, fetcher: async (_url, init) => {
+    attempts++;
+    const request = JSON.parse(init.body);
+    assert.equal(request.include_reasoning, false);
+    if (attempts === 1) {
+      assert.equal(request.max_completion_tokens, 800);
+      return Response.json({ choices: [{ finish_reason: "length", message: { content: null, reasoning: "Internal reasoning must stay private." } }] });
+    }
+    assert.equal(request.max_completion_tokens, 1600);
+    return completion("Choose Request a quote to share your project details.");
+  } });
+  assert.equal(attempts, 2);
+  assert.equal(reply, "Choose Request a quote to share your project details.");
+});
+
+test("authentication errors and quota errors do not retry, and outages stop after two attempts", async () => {
+  for (const [status, expectedAttempts] of [[401, 1], [403, 1], [429, 1], [503, 2]]) {
+    let attempts = 0;
+    await assert.rejects(completeChat([visitor("Hello")], { ...options, fetcher: async () => {
+      attempts++;
+      return new Response("private upstream detail", { status });
+    } }), error => error instanceof ChatProviderError && error.status === (status === 429 ? 429 : 503));
+    assert.equal(attempts, expectedAttempts);
+  }
+});
+
 function blobClient() {
   const objects = new Map();
   let revision = 0;

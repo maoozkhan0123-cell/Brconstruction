@@ -41,8 +41,8 @@ export async function claimBlobChatRateLimit(key: string, now: number, token: st
   const window = Math.floor(now / CHAT_RATE_WINDOW_MS);
   const pathname = `chat-rate-limits/${window}/${key}.json`;
   const privateOptions = { access: "private" as const, token };
-  // One deadline for all storage attempts leaves time for the 20-second
-  // provider call within the browser's 35-second request timeout.
+  // One storage deadline leaves time for the provider's 30-second retry
+  // budget within the browser's 50-second request timeout.
   const abortSignal = AbortSignal.timeout(10000);
 
   for (let attempt = 0; attempt < 3; attempt++) {
